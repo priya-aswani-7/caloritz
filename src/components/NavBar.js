@@ -5,6 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
+import { Box } from "@mui/material";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -26,7 +27,7 @@ HideOnScroll.propTypes = {
 
 export const NavBar = (props) => {
   return (
-    <React.Fragment>
+    <Box mb={3}>
       <HideOnScroll {...props}>
         <AppBar>
           <Toolbar>
@@ -37,6 +38,6 @@ export const NavBar = (props) => {
         </AppBar>
       </HideOnScroll>
       <Toolbar />
-    </React.Fragment>
+    </Box>
   );
 };
