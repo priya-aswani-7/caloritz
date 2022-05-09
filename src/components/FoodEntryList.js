@@ -44,7 +44,7 @@ export const FoodEntryList = () => {
   ]);
 
   return (
-    <Paper sx={{ mx: 4, textAlign: "center", pt: 3, pb: 5 }}>
+    <Paper sx={{ mx: 4, textAlign: "center", pt: 3, pb: 5, mb: 3 }}>
       <Typography variant="h3" component="h1" sx={{ mb: 4, fontWeight: 100 }}>
         Your current food entries :)
       </Typography>
