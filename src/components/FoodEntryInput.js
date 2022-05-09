@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Fab, Paper, TextField, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -11,6 +11,10 @@ import Grid from "@mui/material/Grid";
 
 export const FoodEntryInput = () => {
   const [displayForm, setDisplayForm] = useState(null);
+  const [productName, setProductName] = useState(null);
+  const [calories, setCalories] = useState(null);
+  const [consumedAt, setConsumedAt] = useState(null);
+
   return (
     <Box sx={{ mb: 3 }}>
       <Box sx={{ textAlign: "center" }}>
@@ -43,21 +47,35 @@ export const FoodEntryInput = () => {
           >
             <Grid container spacing={2} mb={3}>
               <Grid item xs={12} sm={12}>
-                <TextField label="Product Name" variant="outlined" fullWidth />
+                <TextField
+                  label="Product Name"
+                  variant="outlined"
+                  value={productName}
+                  onChange={(event) => setProductName(event.target.value)}
+                  fullWidth
+                  required
+                />
               </Grid>
               <Grid item xs={6} sm={6}>
                 <TextField
                   label="Calories"
                   type="Number"
+                  value={calories}
+                  onChange={(event) => setCalories(event.target.value)}
                   variant="outlined"
                   fullWidth
+                  required
                 />
               </Grid>
               <Grid item xs={6} md={6}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DateTimePicker
-                    renderInput={(props) => <TextField {...props} fullWidth />}
+                    renderInput={(props) => (
+                      <TextField {...props} fullWidth required />
+                    )}
                     label="Consumed At"
+                    value={consumedAt}
+                    onChange={(value) => setConsumedAt(value)}
                   />
                 </LocalizationProvider>
               </Grid>
