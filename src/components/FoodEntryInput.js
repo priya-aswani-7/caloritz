@@ -8,8 +8,9 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import Grid from "@mui/material/Grid";
+import { cloneDeep } from "lodash";
 
-export const FoodEntryInput = () => {
+export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
   const [displayForm, setDisplayForm] = useState(null);
   const [productName, setProductName] = useState("");
   const [calories, setCalories] = useState("");
@@ -19,6 +20,20 @@ export const FoodEntryInput = () => {
     setProductName("");
     setCalories("");
     setConsumedAt(null);
+  };
+
+  const handleSave = () => {
+    const currentFoodEntries = foodEntries ? cloneDeep(foodEntries) : [];
+    currentFoodEntries.push({
+      id: foodEntries?.length || 1,
+      productName,
+      calories,
+      consumedAt,
+    });
+
+    setFoodEntries(currentFoodEntries);
+    setDisplayForm(false);
+    handleClear();
   };
 
   useEffect(() => {
@@ -114,7 +129,12 @@ export const FoodEntryInput = () => {
               >
                 Clear
               </Button>
-              <Button variant="contained" size="large" endIcon={<SendIcon />}>
+              <Button
+                variant="contained"
+                size="large"
+                endIcon={<SendIcon />}
+                onClick={() => handleSave()}
+              >
                 Save
               </Button>
             </Box>
