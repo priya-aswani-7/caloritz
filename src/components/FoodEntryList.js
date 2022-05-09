@@ -9,40 +9,7 @@ import { Box } from "@mui/system";
 import { FoodEntry } from "./index";
 import { Paper, Typography } from "@mui/material";
 
-export const FoodEntryList = () => {
-  const [foodEntries, setFoodEntries] = useState([
-    {
-      id: 1,
-      productName: "Frozen yoghurt",
-      calories: 159,
-      consumedAt: "10:02 pm, 22 April 2022",
-    },
-    {
-      id: 2,
-      productName: "Ice cream sandwich",
-      calories: 237,
-      consumedAt: "08:02 am, 22 April 2022",
-    },
-    {
-      id: 3,
-      productName: "Eclair",
-      calories: 262,
-      consumedAt: "05:00 pm, 21 April 2022",
-    },
-    {
-      id: 4,
-      productName: "Cupcake",
-      calories: 305,
-      consumedAt: "11:03 pm, 20 April 2022",
-    },
-    {
-      id: 5,
-      productName: "Gingerbread",
-      calories: 356,
-      consumedAt: "09:27 pm, 20 April 2022",
-    },
-  ]);
-
+export const FoodEntryList = ({ foodEntries }) => {
   return (
     <Paper sx={{ mx: 4, textAlign: "center", pt: 3, pb: 5, mb: 3 }}>
       <Typography variant="h3" component="h1" sx={{ mb: 4, fontWeight: 100 }}>
