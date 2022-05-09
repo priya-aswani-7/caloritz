@@ -11,9 +11,27 @@ import Grid from "@mui/material/Grid";
 
 export const FoodEntryInput = () => {
   const [displayForm, setDisplayForm] = useState(null);
-  const [productName, setProductName] = useState(null);
-  const [calories, setCalories] = useState(null);
+  const [productName, setProductName] = useState("");
+  const [calories, setCalories] = useState("");
   const [consumedAt, setConsumedAt] = useState(null);
+
+  const handleClear = () => {
+    setProductName("");
+    setCalories("");
+    setConsumedAt(null);
+  };
+
+  useEffect(() => {
+    console.log("pn changed:", productName);
+  }, [productName]);
+
+  useEffect(() => {
+    console.log("calories changed:", calories);
+  }, [calories]);
+
+  useEffect(() => {
+    console.log("consumedAt changed:", consumedAt);
+  }, [consumedAt]);
 
   return (
     <Box sx={{ mb: 3 }}>
@@ -92,6 +110,7 @@ export const FoodEntryInput = () => {
                 sx={{ mr: 1 }}
                 size="large"
                 startIcon={<ClearIcon />}
+                onClick={() => handleClear()}
               >
                 Clear
               </Button>
