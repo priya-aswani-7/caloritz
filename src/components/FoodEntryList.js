@@ -10,10 +10,10 @@ import { Paper, Typography } from "@mui/material";
 import { cloneDeep } from "lodash";
 
 export const FoodEntryList = ({ foodEntries, setFoodEntries }) => {
-  const handleDelete = (id) => {
+  const handleDelete = (deleteIndex) => {
     let currentFoodEntries = foodEntries ? cloneDeep(foodEntries) : [];
     currentFoodEntries = currentFoodEntries.filter(
-      (foodEntry) => foodEntry.id !== id && foodEntry
+      (foodEntry, index) => index !== deleteIndex && foodEntry
     );
     setFoodEntries(currentFoodEntries);
   };
@@ -46,10 +46,11 @@ export const FoodEntryList = ({ foodEntries, setFoodEntries }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {foodEntries.map((foodEntry) => (
+              {foodEntries.map((foodEntry, index) => (
                 <FoodEntry
                   {...foodEntry}
-                  key={foodEntry.id.toString()}
+                  index={index}
+                  key={index.toString()}
                   handleDelete={handleDelete}
                 />
               ))}
