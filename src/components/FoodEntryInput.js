@@ -130,7 +130,7 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
                   required
                 />
               </Grid>
-              <Grid item xs={6} md={6}>
+              <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DateTimePicker
                     renderInput={(props) => (
