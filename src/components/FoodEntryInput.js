@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -13,10 +13,11 @@ import { cloneDeep } from "lodash";
 
 export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
   const [open, setOpen] = useState(false);
-  const [productName, setProductName] = useState("");
-  const [cost, setCost] = useState("");
-  const [calories, setCalories] = useState("");
+  const [productName, setProductName] = useState(null);
+  const [cost, setCost] = useState(null);
+  const [calories, setCalories] = useState(null);
   const [consumedAt, setConsumedAt] = useState(null);
+  const [datePickerOpened, setDatePickerOpened] = useState(null);
 
   const handleSave = () => {
     const currentFoodEntries = foodEntries ? cloneDeep(foodEntries) : [];
@@ -30,10 +31,11 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
 
     setFoodEntries(currentFoodEntries);
 
-    setProductName("");
-    setCalories("");
-    setCost("");
+    setProductName(null);
+    setCalories(null);
+    setCost(null);
     setConsumedAt(null);
+    setDatePickerOpened(null);
     setOpen(false);
   };
 
@@ -44,6 +46,10 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    console.log(consumedAt);
+  }, [consumedAt]);
 
   return (
     <Box sx={{ textAlign: "center", mb: 4 }}>
@@ -67,6 +73,10 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
                 onChange={(event) => setProductName(event.target.value)}
                 fullWidth
                 required
+                error={productName?.trim() === ""}
+                helperText={
+                  productName?.trim() === "" ? "Product name is required" : null
+                }
               />
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -81,6 +91,14 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
                 }
                 fullWidth
                 required
+                error={cost === "" || cost < 0}
+                helperText={
+                  cost === ""
+                    ? "Product cost is required"
+                    : cost < 0
+                    ? "Product cost must be positive"
+                    : null
+                }
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -95,6 +113,14 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
                 }
                 fullWidth
                 required
+                error={calories === "" || calories < 0}
+                helperText={
+                  calories === ""
+                    ? "Product calories are required"
+                    : calories < 0
+                    ? "Product calories must be positive"
+                    : null
+                }
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -107,11 +133,26 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
                       margin="none"
                       fullWidth
                       required
+                      error={
+                        (datePickerOpened &&
+                          (consumedAt === null || consumedAt === "")) ||
+                        consumedAt > new Date()
+                      }
+                      helperText={
+                        datePickerOpened &&
+                        (consumedAt === null || consumedAt === "")
+                          ? "Product consumed at timestamp required"
+                          : consumedAt > new Date()
+                          ? "Product consumed at timestamp cannot be in the future"
+                          : null
+                      }
                     />
                   )}
                   label="Consumed At"
                   value={consumedAt}
                   onChange={(value) => setConsumedAt(value)}
+                  onClose={() => !consumedAt && setDatePickerOpened(true)}
+                  maxDateTime={new Date()}
                 />
               </LocalizationProvider>
             </Grid>
