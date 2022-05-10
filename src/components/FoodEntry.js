@@ -5,7 +5,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { grey } from "@mui/material/colors";
 import { Button, Popover, Typography } from "@mui/material";
 
-export const FoodEntry = ({ id, productName, calories, consumedAt }) => {
+export const FoodEntry = ({ id, productName, cost, calories, consumedAt }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [consumedAtTimeString, setConsumedAtTimeString] = useState(null);
   const open = Boolean(anchorEl);
@@ -51,6 +51,7 @@ export const FoodEntry = ({ id, productName, calories, consumedAt }) => {
     <TableRow>
       <TableCell>{id}</TableCell>
       <TableCell align="center">{productName}</TableCell>
+      <TableCell align="center">${cost.toFixed(2)}</TableCell>
       <TableCell align="center">{calories}</TableCell>
       <TableCell align="center">{consumedAtTimeString}</TableCell>
       <TableCell align="right">
