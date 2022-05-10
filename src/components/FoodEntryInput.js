@@ -91,9 +91,9 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
                 }
                 fullWidth
                 required
-                error={cost === "" || cost < 0}
+                error={cost === "" || (cost !== null && cost <= 0)}
                 helperText={
-                  cost === ""
+                  cost === "" || cost === 0
                     ? "Product cost is required"
                     : cost < 0
                     ? "Product cost must be positive"
