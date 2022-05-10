@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -17,13 +16,16 @@ export const FoodEntryList = ({ foodEntries }) => {
       </Typography>
 
       <TableContainer>
-        <Box sx={{ maxWidth: 800, px: 5, mx: "auto" }}>
+        <Box sx={{ maxWidth: 875, px: 5, mx: "auto" }}>
           <Table aria-label="simple table" size="small">
             <TableHead>
               <TableRow>
                 <TableCell component="th">Index</TableCell>
                 <TableCell component="th" align="center">
                   Product name
+                </TableCell>
+                <TableCell component="th" align="center">
+                  Cost
                 </TableCell>
                 <TableCell component="th" align="center">
                   Calories
