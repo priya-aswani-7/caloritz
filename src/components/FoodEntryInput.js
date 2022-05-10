@@ -113,9 +113,9 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
                 }
                 fullWidth
                 required
-                error={calories === "" || calories < 0}
+                error={calories === "" || (calories !== null && calories <= 0)}
                 helperText={
-                  calories === ""
+                  calories === "" || calories === 0
                     ? "Product calories are required"
                     : calories < 0
                     ? "Product calories must be positive"
