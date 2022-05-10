@@ -160,7 +160,25 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSave}>Save</Button>
+          <Button
+            onClick={handleSave}
+            disabled={
+              !productName ||
+              !cost ||
+              !calories ||
+              !consumedAt ||
+              productName?.trim() === "" ||
+              cost === "" ||
+              cost <= 0 ||
+              calories === "" ||
+              calories <= 0 ||
+              (datePickerOpened &&
+                (consumedAt === null || consumedAt === "")) ||
+              consumedAt > new Date()
+            }
+          >
+            Save
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>
