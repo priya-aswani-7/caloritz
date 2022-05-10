@@ -141,9 +141,9 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
                       helperText={
                         datePickerOpened &&
                         (consumedAt === null || consumedAt === "")
-                          ? "Product consumed at timestamp required"
+                          ? "Product consumption timestamp is required"
                           : consumedAt > new Date()
-                          ? "Product consumed at timestamp cannot be in the future"
+                          ? "Product consumption timestamp cannot be in the future"
                           : null
                       }
                     />
