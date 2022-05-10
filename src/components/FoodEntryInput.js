@@ -38,6 +38,7 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
     currentFoodEntries.push({
       id: foodEntries?.length + 1 || 1,
       productName,
+      cost,
       calories,
       consumedAt,
     });
