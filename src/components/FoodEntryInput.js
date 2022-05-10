@@ -122,7 +122,9 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
                   label="Calories"
                   type="Number"
                   value={calories}
-                  onChange={(event) => setCalories(event.target.value)}
+                  onChange={(event) =>
+                    setCalories(parseFloat(event.target.value))
+                  }
                   variant="outlined"
                   fullWidth
                   required
