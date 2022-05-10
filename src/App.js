@@ -47,7 +47,10 @@ export const App = () => {
         foodEntries={foodEntries}
         setFoodEntries={setFoodEntries}
       />
-      <FoodEntryList foodEntries={foodEntries} />
+      <FoodEntryList
+        foodEntries={foodEntries}
+        setFoodEntries={setFoodEntries}
+      />
     </>
   );
 };
