@@ -36,7 +36,7 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
   const handleSave = () => {
     const currentFoodEntries = foodEntries ? cloneDeep(foodEntries) : [];
     currentFoodEntries.push({
-      id: foodEntries?.length || 1,
+      id: foodEntries?.length + 1 || 1,
       productName,
       calories,
       consumedAt,
