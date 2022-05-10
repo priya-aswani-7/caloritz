@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
-import { Button, Fab, Paper, TextField, Typography } from "@mui/material";
+import {
+  FormControl,
+  Button,
+  Fab,
+  InputLabel,
+  OutlinedInput,
+  Paper,
+  TextField,
+  Typography,
+  InputAdornment,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
 import SendIcon from "@mui/icons-material/Send";
@@ -13,6 +23,7 @@ import { cloneDeep } from "lodash";
 export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
   const [displayForm, setDisplayForm] = useState(null);
   const [productName, setProductName] = useState("");
+  const [cost, setCost] = useState("");
   const [calories, setCalories] = useState("");
   const [consumedAt, setConsumedAt] = useState(null);
 
@@ -79,7 +90,7 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
             }}
           >
             <Grid container spacing={2} mb={3}>
-              <Grid item xs={12} sm={12}>
+              <Grid item xs={12} sm={8}>
                 <TextField
                   label="Product Name"
                   variant="outlined"
@@ -89,7 +100,23 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
                   required
                 />
               </Grid>
-              <Grid item xs={6} sm={6}>
+              <Grid item xs={12} sm={4}>
+                <FormControl fullWidth required>
+                  <InputLabel>Cost</InputLabel>
+                  <OutlinedInput
+                    type="Number"
+                    value={cost}
+                    onChange={(event) =>
+                      setCost(parseFloat(event.target.value) || "")
+                    }
+                    startAdornment={
+                      <InputAdornment position="start">$</InputAdornment>
+                    }
+                    label="Cost"
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   label="Calories"
                   type="Number"
