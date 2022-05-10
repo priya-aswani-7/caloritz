@@ -11,7 +11,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 export const FoodEntry = ({
-  id,
+  index,
   productName,
   cost,
   calories,
@@ -71,7 +71,7 @@ export const FoodEntry = ({
 
   return (
     <TableRow>
-      <TableCell>{id}</TableCell>
+      <TableCell>{index + 1}</TableCell>
       <TableCell align="center">{productName}</TableCell>
       <TableCell align="center">${cost.toFixed(2)}</TableCell>
       <TableCell align="center">{calories.toFixed(2)}</TableCell>
@@ -127,8 +127,9 @@ export const FoodEntry = ({
               <Button onClick={handleDeleteClose}>Cancel</Button>
               <Button
                 onClick={() => {
-                  handleDelete(id);
+                  handleDelete(index);
                   handleDeleteClose();
+                  handleClose();
                 }}
                 autoFocus
               >
