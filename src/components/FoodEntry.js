@@ -52,7 +52,7 @@ export const FoodEntry = ({ id, productName, cost, calories, consumedAt }) => {
       <TableCell>{id}</TableCell>
       <TableCell align="center">{productName}</TableCell>
       <TableCell align="center">${cost.toFixed(2)}</TableCell>
-      <TableCell align="center">{calories}</TableCell>
+      <TableCell align="center">{calories.toFixed(2)}</TableCell>
       <TableCell align="center">{consumedAtTimeString}</TableCell>
       <TableCell align="right">
         <Button onClick={handleClick}>
