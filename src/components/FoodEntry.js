@@ -10,7 +10,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export const FoodEntry = ({ id, productName, cost, calories, consumedAt }) => {
+export const FoodEntry = ({
+  id,
+  productName,
+  cost,
+  calories,
+  consumedAt,
+  handleDelete,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [consumedAtTimeString, setConsumedAtTimeString] = useState(null);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
@@ -118,7 +125,13 @@ export const FoodEntry = ({ id, productName, cost, calories, consumedAt }) => {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleDeleteClose}>Cancel</Button>
-              <Button onClick={handleDeleteClose} autoFocus>
+              <Button
+                onClick={() => {
+                  handleDelete(id);
+                  handleDeleteClose();
+                }}
+                autoFocus
+              >
                 Delete
               </Button>
             </DialogActions>
