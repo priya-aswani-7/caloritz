@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -11,10 +11,21 @@ import Typography from "@mui/material/Typography";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { getMonthYearString, getDateTimeString } from "../utils/helpers";
+import { Chip } from "@mui/material";
 
-export const FoodEntry = ({ monthlyFoodEntry }) => {
+export const FoodEntry = ({ monthlyFoodEntry, monthlyBudget }) => {
   const [open, setOpen] = useState(false);
+  const [monthlyBudgetExceeded, setMonthlyBudgetExceeded] = useState(false);
   let monthYearString = getMonthYearString(monthlyFoodEntry.monthYear);
+
+  useEffect(() => {
+    let spending = 0;
+    for (let i = 0; i < monthlyFoodEntry.foodEntries.length; i++) {
+      if (spending > monthlyBudget) break;
+      spending += monthlyFoodEntry.foodEntries[i].cost;
+    }
+    setMonthlyBudgetExceeded(spending > monthlyBudget);
+  }, [monthlyFoodEntry.foodEntries]);
 
   return (
     <React.Fragment>
@@ -28,6 +39,11 @@ export const FoodEntry = ({ monthlyFoodEntry }) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>{" "}
           {monthYearString}
+        </TableCell>
+        <TableCell align="right">
+          {monthlyBudgetExceeded && (
+            <Chip label="Monthly budget exceeded" color="warning" />
+          )}
         </TableCell>
       </TableRow>
       <TableRow>
