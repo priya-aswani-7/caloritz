@@ -11,7 +11,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { cloneDeep } from "lodash";
 
-export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
+export const FoodEntryInput = ({ data, setData }) => {
   const [open, setOpen] = useState(false);
   const [productName, setProductName] = useState(null);
   const [cost, setCost] = useState(null);
@@ -20,16 +20,49 @@ export const FoodEntryInput = ({ foodEntries, setFoodEntries }) => {
   const [datePickerOpened, setDatePickerOpened] = useState(null);
 
   const handleSave = () => {
-    const currentFoodEntries = foodEntries ? cloneDeep(foodEntries) : [];
-    currentFoodEntries.push({
-      id: foodEntries?.length + 1 || 1,
-      productName,
-      cost,
-      calories,
-      consumedAt,
-    });
+    let currentData = data ? cloneDeep(data) : [];
 
-    setFoodEntries(currentFoodEntries);
+    const month = consumedAt.getMonth();
+    const year = consumedAt.getFullYear();
+    const monthYear = new Date(year, month).getTime();
+
+    let monthlyFoodEntryIndex = data ? -1 : 0;
+    let currentMonthlyFoodEntry = data.filter((monthlyFoodEntry, index) => {
+      if (monthlyFoodEntry.monthYear === monthYear) {
+        monthlyFoodEntryIndex = index;
+        return monthlyFoodEntry;
+      }
+    })[0];
+
+    if (monthlyFoodEntryIndex === -1) {
+      let low = 0;
+      let high = data.length - 1;
+      let mid;
+      while (low <= high) {
+        mid = Math.floor((low + high) / 2);
+        if (data[mid].monthYear < monthYear) {
+          low = mid + 1;
+        } else {
+          high = mid - 1;
+        }
+      }
+
+      monthlyFoodEntryIndex = low;
+
+      currentData.splice(low, 0, {
+        monthYear,
+        foodEntries: [{ productName, cost, calories, consumedAt }],
+      });
+    } else {
+      currentMonthlyFoodEntry.foodEntries.push({
+        productName,
+        cost,
+        calories,
+        consumedAt,
+      });
+      currentData[monthlyFoodEntryIndex] = currentMonthlyFoodEntry;
+    }
+    setData(currentData);
 
     setProductName(null);
     setCalories(null);
