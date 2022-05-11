@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { FoodEntry } from "./";
 
-export const FoodEntryList = ({ data, setData }) => {
+export const FoodEntryList = ({ data }) => {
   return (
     <TableContainer>
       <Box sx={{ maxWidth: 875, px: 5, mx: "auto" }}>
