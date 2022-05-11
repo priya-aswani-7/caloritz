@@ -54,12 +54,16 @@ export const FoodEntryInput = ({ data, setData }) => {
         foodEntries: [{ productName, cost, calories, consumedAt }],
       });
     } else {
-      currentMonthlyFoodEntry.foodEntries.push({
-        productName,
-        cost,
-        calories,
-        consumedAt,
-      });
+      currentMonthlyFoodEntry.foodEntries = [
+        ...currentMonthlyFoodEntry.foodEntries,
+        {
+          productName,
+          cost,
+          calories,
+          consumedAt,
+        },
+      ];
+
       currentData[monthlyFoodEntryIndex] = currentMonthlyFoodEntry;
     }
     setData(currentData);
