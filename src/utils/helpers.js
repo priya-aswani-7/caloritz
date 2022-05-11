@@ -60,3 +60,18 @@ export const getDateTimeString = (UTCTimestamp) => {
 
   return dateTimeString;
 };
+
+export const getInsertPosition = (data, propertyName, value) => {
+  let low = 0;
+  let high = data.length - 1;
+  let mid;
+  while (low <= high) {
+    mid = Math.floor((low + high) / 2);
+    if (data[mid][propertyName] < value) {
+      low = mid + 1;
+    } else {
+      high = mid - 1;
+    }
+  }
+  return low;
+};
