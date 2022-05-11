@@ -47,21 +47,35 @@ export const FoodEntryInput = ({ data, setData }) => {
         }
       }
 
-      monthlyFoodEntryIndex = low;
-
       currentData.splice(low, 0, {
         monthYear,
         foodEntries: [{ productName, cost, calories, consumedAt }],
       });
     } else {
+      let low = 0;
+      let high = currentMonthlyFoodEntry.foodEntries.length - 1;
+      let mid;
+      while (low <= high) {
+        mid = Math.floor((low + high) / 2);
+        if (
+          currentMonthlyFoodEntry.foodEntries[mid].consumedAt <
+          consumedAt.getTime()
+        ) {
+          low = mid + 1;
+        } else {
+          high = mid - 1;
+        }
+      }
+
+      currentMonthlyFoodEntry.foodEntries.splice(low, 0, {
+        productName,
+        cost,
+        calories,
+        consumedAt: consumedAt.getTime(),
+      });
+
       currentMonthlyFoodEntry.foodEntries = [
         ...currentMonthlyFoodEntry.foodEntries,
-        {
-          productName,
-          cost,
-          calories,
-          consumedAt,
-        },
       ];
 
       currentData[monthlyFoodEntryIndex] = currentMonthlyFoodEntry;
@@ -83,10 +97,6 @@ export const FoodEntryInput = ({ data, setData }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  useEffect(() => {
-    console.log(consumedAt);
-  }, [consumedAt]);
 
   return (
     <Box sx={{ textAlign: "center", mb: 4 }}>
