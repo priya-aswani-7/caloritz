@@ -42,7 +42,7 @@ export const getDateTimeString = (UTCTimestamp) => {
   let dateTimeString =
     (meridian === "pm"
       ? hours < 22
-        ? "0" + hours - 12
+        ? "0" + (hours - 12)
         : hours - 12
       : hours < 10
       ? "0" + hours
