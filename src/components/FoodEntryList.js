@@ -42,7 +42,7 @@ export const FoodEntryList = ({ foodEntries, setFoodEntries }) => {
                 <TableCell component="th" align="center">
                   Consumed at
                 </TableCell>
-                <TableCell component="th" align="center"></TableCell>
+                {/* <TableCell component="th" align="center"></TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
