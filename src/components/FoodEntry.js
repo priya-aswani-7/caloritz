@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { grey } from "@mui/material/colors";
-import { Button, Popover, Typography } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+// import MoreVertIcon from "@mui/icons-material/MoreVert";
+// import { grey } from "@mui/material/colors";
+// import { Button, Popover, Typography } from "@mui/material";
+// import Dialog from "@mui/material/Dialog";
+// import DialogActions from "@mui/material/DialogActions";
+// import DialogContent from "@mui/material/DialogContent";
+// import DialogContentText from "@mui/material/DialogContentText";
+// import DialogTitle from "@mui/material/DialogTitle";
 
 export const FoodEntry = ({
   index,
@@ -76,7 +76,7 @@ export const FoodEntry = ({
       <TableCell align="center">${cost.toFixed(2)}</TableCell>
       <TableCell align="center">{calories.toFixed(2)}</TableCell>
       <TableCell align="center">{consumedAtTimeString}</TableCell>
-      <TableCell align="right">
+      {/* <TableCell align="right">
         <Button onClick={handleClick}>
           <MoreVertIcon sx={{ color: grey[500] }} />
         </Button>
@@ -138,7 +138,7 @@ export const FoodEntry = ({
             </DialogActions>
           </Dialog>
         </Popover>
-      </TableCell>
+      </TableCell> */}
     </TableRow>
   );
 };
