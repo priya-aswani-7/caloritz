@@ -7,8 +7,17 @@ import TableRow from "@mui/material/TableRow";
 import { Box } from "@mui/system";
 import { FoodEntry } from "./index";
 import { Paper, Typography } from "@mui/material";
+import { cloneDeep } from "lodash";
 
-export const FoodEntryList = ({ foodEntries }) => {
+export const FoodEntryList = ({ foodEntries, setFoodEntries }) => {
+  const handleDelete = (deleteIndex) => {
+    let currentFoodEntries = foodEntries ? cloneDeep(foodEntries) : [];
+    currentFoodEntries = currentFoodEntries.filter(
+      (foodEntry, index) => index !== deleteIndex && foodEntry
+    );
+    setFoodEntries(currentFoodEntries);
+  };
+
   return (
     <Paper sx={{ mx: 4, textAlign: "center", pt: 3, pb: 5, mb: 3 }}>
       <Typography variant="h3" component="h1" sx={{ mb: 4, fontWeight: 100 }}>
@@ -33,12 +42,17 @@ export const FoodEntryList = ({ foodEntries }) => {
                 <TableCell component="th" align="center">
                   Consumed at
                 </TableCell>
-                <TableCell component="th" align="center"></TableCell>
+                {/* <TableCell component="th" align="center"></TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
-              {foodEntries.map((foodEntry) => (
-                <FoodEntry {...foodEntry} key={foodEntry.id.toString()} />
+              {foodEntries.map((foodEntry, index) => (
+                <FoodEntry
+                  {...foodEntry}
+                  index={index}
+                  key={index.toString()}
+                  handleDelete={handleDelete}
+                />
               ))}
             </TableBody>
           </Table>
