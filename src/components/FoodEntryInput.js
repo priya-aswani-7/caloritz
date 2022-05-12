@@ -85,10 +85,6 @@ export const FoodEntryInput = ({ data, setData, isAdmin, users }) => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    console.log("user changed", selectedUserIndex);
-  }, [selectedUserIndex]);
-
   return (
     <Box sx={{ textAlign: "center", mb: 4 }}>
       <Button variant="outlined" onClick={handleClickOpen}>
