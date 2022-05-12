@@ -10,9 +10,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { Grid } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
-export const Filter = () => {
+export const Filter = ({
+  filterStartDate,
+  filterEndDate,
+  setFilterStartDate,
+  setFilterEndDate,
+}) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -31,14 +36,14 @@ export const Filter = () => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Filters</DialogTitle>
         <DialogContent>
-          <DialogContentText mb={1}>
+          <DialogContentText mb={2}>
             To apply date filters to displayed food entries, select Start and
             End Dates below.
           </DialogContentText>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateTimePicker
+                <DatePicker
                   renderInput={(props) => (
                     <TextField
                       {...props}
@@ -48,13 +53,18 @@ export const Filter = () => {
                       required
                     />
                   )}
+                  value={filterStartDate}
+                  onChange={(value) => setFilterStartDate(value)}
+                  maxDate={
+                    filterEndDate < new Date() ? filterEndDate : new Date()
+                  }
                   label="Start Date"
                 />
               </LocalizationProvider>
             </Grid>
             <Grid item xs={12} sm={6}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateTimePicker
+                <DatePicker
                   renderInput={(props) => (
                     <TextField
                       {...props}
@@ -64,7 +74,11 @@ export const Filter = () => {
                       required
                     />
                   )}
+                  value={filterEndDate}
+                  onChange={(value) => setFilterEndDate(value)}
                   label="End Date"
+                  minDate={filterStartDate}
+                  maxDate={new Date()}
                 />
               </LocalizationProvider>
             </Grid>
