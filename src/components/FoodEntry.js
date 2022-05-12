@@ -10,12 +10,22 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { getMonthYearString, getDateTimeString } from "../utils/helpers";
+import {
+  getMonthYearString,
+  getDateTimeString,
+  areTimestampsInTheSameDay,
+  getDateFromTimestamp,
+} from "../utils/helpers";
 import { Chip } from "@mui/material";
 
-export const FoodEntry = ({ monthlyFoodEntry, monthlyBudget }) => {
+export const FoodEntry = ({
+  monthlyFoodEntry,
+  monthlyBudget,
+  dailyCalorieLimit,
+}) => {
   const [open, setOpen] = useState(false);
   const [monthlyBudgetExceeded, setMonthlyBudgetExceeded] = useState(false);
+  const [daysCalorieLimitExceeded, setDaysCalorieLimitExceeded] = useState([]);
   let monthYearString = getMonthYearString(monthlyFoodEntry.monthYear);
 
   useEffect(() => {
@@ -25,6 +35,32 @@ export const FoodEntry = ({ monthlyFoodEntry, monthlyBudget }) => {
       spending += monthlyFoodEntry.foodEntries[i].cost;
     }
     setMonthlyBudgetExceeded(spending > monthlyBudget);
+
+    let currentCalorieCount = 0;
+    let currentDate = monthlyFoodEntry.foodEntries[0].consumedAt;
+    let currentDaysCalorieLimitExceeded = [];
+    monthlyFoodEntry.foodEntries.map((foodEntry) => {
+      if (areTimestampsInTheSameDay(foodEntry.consumedAt, currentDate)) {
+        currentCalorieCount += foodEntry.calories;
+      } else {
+        if (currentCalorieCount > dailyCalorieLimit) {
+          currentDaysCalorieLimitExceeded.push(
+            getDateFromTimestamp(currentDate)
+          );
+        }
+        currentCalorieCount = foodEntry.calories;
+        currentDate = foodEntry.consumedAt;
+      }
+    });
+    if (
+      currentCalorieCount > dailyCalorieLimit &&
+      currentDaysCalorieLimitExceeded.indexOf(
+        getDateFromTimestamp(currentDate)
+      ) === -1
+    ) {
+      currentDaysCalorieLimitExceeded.push(getDateFromTimestamp(currentDate));
+    }
+    setDaysCalorieLimitExceeded(currentDaysCalorieLimitExceeded);
   }, [monthlyFoodEntry.foodEntries]);
 
   return (
@@ -42,7 +78,7 @@ export const FoodEntry = ({ monthlyFoodEntry, monthlyBudget }) => {
         </TableCell>
         <TableCell align="right">
           {monthlyBudgetExceeded && (
-            <Chip label="Monthly budget exceeded" color="warning" />
+            <Chip label="Monthly budget exceeded" color="secondary" />
           )}
         </TableCell>
       </TableRow>
@@ -61,6 +97,7 @@ export const FoodEntry = ({ monthlyFoodEntry, monthlyBudget }) => {
                     <TableCell>Cost</TableCell>
                     <TableCell>Calories</TableCell>
                     <TableCell>Consumed At</TableCell>
+                    <TableCell />
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -68,6 +105,11 @@ export const FoodEntry = ({ monthlyFoodEntry, monthlyBudget }) => {
                     let consumedAtTimeString = getDateTimeString(
                       foodEntry.consumedAt
                     );
+                    let dailyCalorieLimitExceeeded =
+                      daysCalorieLimitExceeded.indexOf(
+                        getDateFromTimestamp(foodEntry.consumedAt)
+                      ) !== -1;
+
                     return (
                       <TableRow key={index.toString()}>
                         <TableCell>{index + 1}</TableCell>
@@ -75,6 +117,15 @@ export const FoodEntry = ({ monthlyFoodEntry, monthlyBudget }) => {
                         <TableCell>{foodEntry.cost}</TableCell>
                         <TableCell>{foodEntry.calories}</TableCell>
                         <TableCell>{consumedAtTimeString}</TableCell>
+                        <TableCell align="right">
+                          {dailyCalorieLimitExceeeded && (
+                            <Chip
+                              label="Daily calorie limit exceeded"
+                              color="warning"
+                              size="small"
+                            />
+                          )}
+                        </TableCell>
                       </TableRow>
                     );
                   })}
