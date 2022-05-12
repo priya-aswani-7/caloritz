@@ -5,7 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { getDateTimeString } from "../utils/helpers";
+import { GlobalFoodEntry } from "./";
 
 export const GlobalFoodEntryList = ({ data }) => {
   return (
@@ -20,24 +20,17 @@ export const GlobalFoodEntryList = ({ data }) => {
               <TableCell>Cost</TableCell>
               <TableCell>Calories</TableCell>
               <TableCell>Consumed At</TableCell>
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((foodEntry, index) => {
-              let consumedAtTimeString = getDateTimeString(
-                foodEntry.consumedAt
-              );
-              return (
-                <TableRow key={index.toString()}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{foodEntry.userName}</TableCell>
-                  <TableCell>{foodEntry.productName}</TableCell>
-                  <TableCell>{foodEntry.cost}</TableCell>
-                  <TableCell>{foodEntry.calories}</TableCell>
-                  <TableCell>{consumedAtTimeString}</TableCell>
-                </TableRow>
-              );
-            })}
+            {data.map((foodEntry, index) => (
+              <GlobalFoodEntry
+                index={index}
+                {...foodEntry}
+                key={index.toString()}
+              />
+            ))}
           </TableBody>
         </Table>
       </Box>
