@@ -24,6 +24,7 @@ export const FoodEntryInput = ({
   open,
   handleClickOpen,
   handleClose,
+  inEditMode,
 }) => {
   const [selectedUserIndex, setSelectedUserIndex] = useState(null);
   const [productName, setProductName] = useState(null);
@@ -116,11 +117,15 @@ export const FoodEntryInput = ({
         Add new food entry
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
-        <DialogTitle>Add new food entry</DialogTitle>
+        <DialogTitle>
+          {inEditMode ? "Edit food entry" : "Add new food entry"}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText mb={2}>
-            To create a new food entry, make sure to provide details of Product
-            Name, Cost, Calories and Date/Time Consumed At, as indicated below.{" "}
+            To {inEditMode ? "edit the" : "create a new"} food entry, make sure
+            to {inEditMode ? "make desired changes to" : "provide"} details of
+            Product Name, Cost, Calories and Date/Time Consumed At, as indicated
+            below.{" "}
           </DialogContentText>
           <Grid container spacing={2}>
             {isAdmin && (
@@ -261,7 +266,7 @@ export const FoodEntryInput = ({
               consumedAt > new Date()
             }
           >
-            Save
+            {inEditMode ? "Save Changes" : "Create"}
           </Button>
         </DialogActions>
       </Dialog>
