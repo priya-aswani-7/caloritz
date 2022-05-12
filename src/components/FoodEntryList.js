@@ -7,7 +7,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { FoodEntry, Filter } from "./";
 
-export const FoodEntryList = ({ data, monthlyBudget, dailyCalorieLimit }) => {
+export const FoodEntryList = ({
+  data,
+  monthlyBudget,
+  dailyCalorieLimit,
+  filterStartDate,
+  filterEndDate,
+  setFilterStartDate,
+  setFilterEndDate,
+}) => {
   return (
     <TableContainer>
       <Box sx={{ maxWidth: 875, px: 5, mx: "auto" }}>
@@ -16,7 +24,12 @@ export const FoodEntryList = ({ data, monthlyBudget, dailyCalorieLimit }) => {
             <TableRow>
               <TableCell>Month, Year</TableCell>
               <TableCell align="right">
-                <Filter />
+                <Filter
+                  filterStartDate={filterStartDate}
+                  filterEndDate={filterEndDate}
+                  setFilterStartDate={setFilterStartDate}
+                  setFilterEndDate={setFilterEndDate}
+                />
               </TableCell>
             </TableRow>
           </TableHead>
