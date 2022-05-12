@@ -1,0 +1,58 @@
+export const globalFoodEntriesData = [
+  {
+    userName: "John Mitkins",
+    productName: "Frozen yoghurt",
+    cost: 20.12,
+    calories: 159,
+    consumedAt: new Date("10:02 pm, 11 March 2022").getTime(),
+  },
+  {
+    userName: "Alicia Stephens",
+    productName: "Ice cream sandwich",
+    cost: 34.09,
+    calories: 237,
+    consumedAt: new Date("08:02 am, 12 March 2022").getTime(),
+  },
+  {
+    userName: "Sue White",
+    productName: "Eclair",
+    cost: 45.32,
+    calories: 262,
+    consumedAt: new Date("05:00 pm, 13 March 2022").getTime(),
+  },
+  {
+    userName: "Sue White",
+    productName: "Cupcake",
+    cost: 22.34,
+    calories: 305,
+    consumedAt: new Date("11:03 pm, 13 March 2022").getTime(),
+  },
+  {
+    userName: "John Mitkins",
+    productName: "Gingerbread",
+    cost: 11.34,
+    calories: 356,
+    consumedAt: new Date("09:27 pm, 13 March 2022").getTime(),
+  },
+  {
+    userName: "Alicia Stephens",
+    productName: "Butter cookies",
+    cost: 12.34,
+    calories: 200,
+    consumedAt: new Date("11:03 pm, 15 April 2022").getTime(),
+  },
+  {
+    userName: "Jen Stone",
+    productName: "Gingerbread",
+    cost: 11.34,
+    calories: 356,
+    consumedAt: new Date("09:27 pm, 22 April 2022").getTime(),
+  },
+  {
+    userName: "Peter Parker",
+    productName: "Ice cream sandwich",
+    cost: 34.09,
+    calories: 237,
+    consumedAt: new Date("10:02 am, 22 April 2022").getTime(),
+  },
+];
