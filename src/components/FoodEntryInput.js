@@ -131,7 +131,7 @@ export const FoodEntryInput = ({ data, setData, isAdmin, users }) => {
                 label="Product Name"
                 margin="none"
                 variant="standard"
-                value={productName}
+                value={productName ?? ""}
                 onChange={(event) => setProductName(event.target.value)}
                 fullWidth
                 required
@@ -147,7 +147,7 @@ export const FoodEntryInput = ({ data, setData, isAdmin, users }) => {
                 type="Number"
                 margin="none"
                 variant="standard"
-                value={cost}
+                value={cost ?? ""}
                 onChange={(event) =>
                   setCost(parseFloat(event.target.value) || "")
                 }
@@ -169,7 +169,7 @@ export const FoodEntryInput = ({ data, setData, isAdmin, users }) => {
                 type="Number"
                 margin="none"
                 variant="standard"
-                value={calories}
+                value={calories ?? ""}
                 onChange={(event) =>
                   setCalories(parseFloat(event.target.value) || "")
                 }
