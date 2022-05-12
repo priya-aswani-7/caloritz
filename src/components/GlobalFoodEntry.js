@@ -46,6 +46,7 @@ export const GlobalFoodEntry = ({
             variant="contained"
             onClick={handleClick}
             size="small"
+            sx={{ p: 0, m: 0 }}
           >
             <MoreVertIcon sx={{ color: grey[500] }} />
           </IconButton>
@@ -63,7 +64,7 @@ export const GlobalFoodEntry = ({
             <Button variant="none" fullWidth>
               <Typography
                 variant="body2"
-                sx={{ py: 0.5, px: 2, textTransform: "none" }}
+                sx={{ py: 0.5, px: 1, textTransform: "none" }}
               >
                 Edit
               </Typography>
@@ -72,7 +73,7 @@ export const GlobalFoodEntry = ({
             <Button variant="none" fullWidth>
               <Typography
                 variant="body2"
-                sx={{ py: 0.5, px: 2, textTransform: "none" }}
+                sx={{ py: 0.5, px: 1, textTransform: "none" }}
               >
                 Delete
               </Typography>
