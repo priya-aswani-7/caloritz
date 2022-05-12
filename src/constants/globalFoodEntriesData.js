@@ -1,5 +1,6 @@
 export const globalFoodEntriesData = [
   {
+    userId: 3,
     userName: "John Mitkins",
     productName: "Frozen yoghurt",
     cost: 20.12,
@@ -7,6 +8,7 @@ export const globalFoodEntriesData = [
     consumedAt: new Date("10:02 pm, 11 March 2022").getTime(),
   },
   {
+    userId: 1,
     userName: "Alicia Stephens",
     productName: "Ice cream sandwich",
     cost: 34.09,
@@ -14,6 +16,7 @@ export const globalFoodEntriesData = [
     consumedAt: new Date("08:02 am, 12 March 2022").getTime(),
   },
   {
+    userId: 5,
     userName: "Sue White",
     productName: "Eclair",
     cost: 45.32,
@@ -21,6 +24,7 @@ export const globalFoodEntriesData = [
     consumedAt: new Date("05:00 pm, 13 March 2022").getTime(),
   },
   {
+    userId: 5,
     userName: "Sue White",
     productName: "Cupcake",
     cost: 22.34,
@@ -28,6 +32,7 @@ export const globalFoodEntriesData = [
     consumedAt: new Date("11:03 pm, 13 March 2022").getTime(),
   },
   {
+    userId: 3,
     userName: "John Mitkins",
     productName: "Gingerbread",
     cost: 11.34,
@@ -35,6 +40,7 @@ export const globalFoodEntriesData = [
     consumedAt: new Date("09:27 pm, 13 March 2022").getTime(),
   },
   {
+    userId: 1,
     userName: "Alicia Stephens",
     productName: "Butter cookies",
     cost: 12.34,
@@ -42,6 +48,7 @@ export const globalFoodEntriesData = [
     consumedAt: new Date("11:03 pm, 15 April 2022").getTime(),
   },
   {
+    userId: 2,
     userName: "Jen Stone",
     productName: "Gingerbread",
     cost: 11.34,
@@ -49,6 +56,7 @@ export const globalFoodEntriesData = [
     consumedAt: new Date("09:27 pm, 22 April 2022").getTime(),
   },
   {
+    userId: 4,
     userName: "Peter Parker",
     productName: "Ice cream sandwich",
     cost: 34.09,
