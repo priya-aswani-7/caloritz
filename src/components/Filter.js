@@ -67,11 +67,28 @@ export const Filter = ({
                       margin="none"
                       fullWidth
                       required
+                      error={
+                        startDate > new Date() ||
+                        (endDate && startDate > endDate)
+                      }
+                      helperText={
+                        startDate > new Date()
+                          ? "Start Date cannot be in the future"
+                          : endDate && startDate > endDate
+                          ? "Start Date cannot be greater than End Date"
+                          : null
+                      }
                     />
                   )}
                   value={startDate}
                   onChange={(value) => setStartDate(value)}
-                  maxDate={endDate < new Date() ? endDate : new Date()}
+                  maxDate={
+                    !endDate
+                      ? new Date()
+                      : endDate < new Date()
+                      ? endDate
+                      : new Date()
+                  }
                   label="Start Date"
                 />
               </LocalizationProvider>
@@ -86,6 +103,17 @@ export const Filter = ({
                       margin="none"
                       fullWidth
                       required
+                      error={
+                        endDate > new Date() ||
+                        (startDate && endDate && endDate < startDate)
+                      }
+                      helperText={
+                        endDate > new Date()
+                          ? "End Date cannot be in the future"
+                          : startDate && endDate && endDate < startDate
+                          ? "End Date cannot be smaller than Start Date"
+                          : null
+                      }
                     />
                   )}
                   value={endDate}
@@ -100,7 +128,19 @@ export const Filter = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClearFilter}>Clear Filter</Button>
-          <Button onClick={handleApplyFilter}>Apply Filter</Button>
+          <Button
+            onClick={handleApplyFilter}
+            disabled={
+              !startDate ||
+              !endDate ||
+              startDate > new Date() ||
+              (endDate && startDate > endDate) ||
+              endDate > new Date() ||
+              (startDate && endDate && endDate < startDate)
+            }
+          >
+            Apply Filter
+          </Button>
         </DialogActions>
       </Dialog>{" "}
     </>
