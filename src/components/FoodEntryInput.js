@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -6,14 +6,19 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import { Box, Grid } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { cloneDeep } from "lodash";
 import { getInsertPosition } from "../utils/helpers";
 
-export const FoodEntryInput = ({ data, setData }) => {
+export const FoodEntryInput = ({ data, setData, isAdmin, users }) => {
   const [open, setOpen] = useState(false);
+  const [selectedUserIndex, setSelectedUserIndex] = useState(null);
   const [productName, setProductName] = useState(null);
   const [cost, setCost] = useState(null);
   const [calories, setCalories] = useState(null);
@@ -80,6 +85,10 @@ export const FoodEntryInput = ({ data, setData }) => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    console.log("user changed", selectedUserIndex);
+  }, [selectedUserIndex]);
+
   return (
     <Box sx={{ textAlign: "center", mb: 4 }}>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -88,11 +97,35 @@ export const FoodEntryInput = ({ data, setData }) => {
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
         <DialogTitle>Add new food entry</DialogTitle>
         <DialogContent>
-          <DialogContentText mb={1}>
+          <DialogContentText mb={2}>
             To create a new food entry, make sure to provide details of Product
             Name, Cost, Calories and Date/Time Consumed At, as indicated below.{" "}
           </DialogContentText>
           <Grid container spacing={2}>
+            {isAdmin && (
+              <Grid item xs={12} sm={12}>
+                <FormControl variant="standard" fullWidth required>
+                  <InputLabel id="demo-simple-select-standard-label">
+                    User
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={selectedUserIndex ?? ""}
+                    onChange={(event) =>
+                      setSelectedUserIndex(event.target.value)
+                    }
+                    label="Age"
+                  >
+                    {users.map((user, index) => (
+                      <MenuItem key={index.toString()} value={index}>
+                        {user.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            )}
             <Grid item xs={12} sm={8}>
               <TextField
                 label="Product Name"
