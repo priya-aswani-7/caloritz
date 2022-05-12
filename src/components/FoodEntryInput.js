@@ -25,7 +25,17 @@ export const FoodEntryInput = ({ data, setData, isAdmin, users }) => {
   const [consumedAt, setConsumedAt] = useState(null);
   const [datePickerOpened, setDatePickerOpened] = useState(null);
 
-  const handleSave = () => {
+  const handleClear = () => {
+    setSelectedUserIndex(null);
+    setProductName(null);
+    setCalories(null);
+    setCost(null);
+    setConsumedAt(null);
+    setDatePickerOpened(null);
+    setOpen(false);
+  };
+
+  const handleSaveUserEntry = () => {
     let currentData = data ? cloneDeep(data) : [];
 
     const month = consumedAt.getMonth();
@@ -69,12 +79,28 @@ export const FoodEntryInput = ({ data, setData, isAdmin, users }) => {
     }
     setData(currentData);
 
-    setProductName(null);
-    setCalories(null);
-    setCost(null);
-    setConsumedAt(null);
-    setDatePickerOpened(null);
-    setOpen(false);
+    handleClear();
+  };
+
+  const handleSaveAdminEntry = () => {
+    let insertPosition = getInsertPosition(
+      data,
+      "consumedAt",
+      consumedAt.getTime()
+    );
+
+    let currentData = data ? cloneDeep(data) : [];
+    currentData.splice(insertPosition, 0, {
+      userName: users[selectedUserIndex]?.name,
+      userId: users[selectedUserIndex]?.id,
+      productName,
+      cost,
+      calories,
+      consumedAt: consumedAt.getTime(),
+    });
+    setData(currentData);
+
+    handleClear();
   };
 
   const handleClickOpen = () => {
@@ -219,8 +245,9 @@ export const FoodEntryInput = ({ data, setData, isAdmin, users }) => {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button
-            onClick={handleSave}
+            onClick={isAdmin ? handleSaveAdminEntry : handleSaveUserEntry}
             disabled={
+              (isAdmin && selectedUserIndex === null) ||
               !productName ||
               !cost ||
               !calories ||
