@@ -22,15 +22,20 @@ export const FoodEntryInput = ({
   isAdmin,
   users,
   open,
+  selectedUserIndex,
+  setSelectedUserIndex,
+  productName,
+  setProductName,
+  cost,
+  setCost,
+  calories,
+  setCalories,
+  consumedAt,
+  setConsumedAt,
   handleClickOpen,
   handleClose,
   inEditMode,
 }) => {
-  const [selectedUserIndex, setSelectedUserIndex] = useState(null);
-  const [productName, setProductName] = useState(null);
-  const [cost, setCost] = useState(null);
-  const [calories, setCalories] = useState(null);
-  const [consumedAt, setConsumedAt] = useState(null);
   const [datePickerOpened, setDatePickerOpened] = useState(null);
 
   const handleClear = () => {
