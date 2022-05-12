@@ -42,7 +42,7 @@ export const getDateTimeString = (UTCTimestamp) => {
   let dateTimeString =
     (meridian === "pm"
       ? hours < 22
-        ? "0" + hours - 12
+        ? "0" + (hours - 12)
         : hours - 12
       : hours < 10
       ? "0" + hours
@@ -59,4 +59,35 @@ export const getDateTimeString = (UTCTimestamp) => {
     dateString[3];
 
   return dateTimeString;
+};
+
+export const getInsertPosition = (data, propertyName, value) => {
+  let low = 0;
+  let high = data.length - 1;
+  let mid;
+  while (low <= high) {
+    mid = Math.floor((low + high) / 2);
+    if (data[mid][propertyName] < value) {
+      low = mid + 1;
+    } else {
+      high = mid - 1;
+    }
+  }
+  return low;
+};
+
+export const areTimestampsInTheSameDay = (UTCTimestamp1, UTCTimestamp2) => {
+  return (
+    new Date(UTCTimestamp1).toDateString() ===
+    new Date(UTCTimestamp2).toDateString()
+  );
+};
+
+export const getDateFromTimestamp = (UTCTimestamp) => {
+  let date = new Date(UTCTimestamp);
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  ).getTime();
 };

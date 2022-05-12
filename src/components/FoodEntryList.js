@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { FoodEntry } from "./";
 
-export const FoodEntryList = ({ data, setData }) => {
+export const FoodEntryList = ({ data, monthlyBudget, dailyCalorieLimit }) => {
   return (
     <TableContainer>
       <Box sx={{ maxWidth: 875, px: 5, mx: "auto" }}>
@@ -16,6 +16,7 @@ export const FoodEntryList = ({ data, setData }) => {
           <TableHead>
             <TableRow>
               <TableCell>Month, Year</TableCell>
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -23,6 +24,8 @@ export const FoodEntryList = ({ data, setData }) => {
               <FoodEntry
                 key={index.toString()}
                 monthlyFoodEntry={monthlyFoodEntry}
+                monthlyBudget={monthlyBudget}
+                dailyCalorieLimit={dailyCalorieLimit}
               />
             ))}
           </TableBody>

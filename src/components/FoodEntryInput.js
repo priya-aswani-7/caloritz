@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -10,6 +10,7 @@ import { Box, Grid } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { cloneDeep } from "lodash";
+import { getInsertPosition } from "../utils/helpers";
 
 export const FoodEntryInput = ({ data, setData }) => {
   const [open, setOpen] = useState(false);
@@ -35,31 +36,30 @@ export const FoodEntryInput = ({ data, setData }) => {
     })[0];
 
     if (monthlyFoodEntryIndex === -1) {
-      let low = 0;
-      let high = data.length - 1;
-      let mid;
-      while (low <= high) {
-        mid = Math.floor((low + high) / 2);
-        if (data[mid].monthYear < monthYear) {
-          low = mid + 1;
-        } else {
-          high = mid - 1;
-        }
-      }
+      let insertPosition = getInsertPosition(data, "monthYear", monthYear);
 
-      monthlyFoodEntryIndex = low;
-
-      currentData.splice(low, 0, {
+      currentData.splice(insertPosition, 0, {
         monthYear,
         foodEntries: [{ productName, cost, calories, consumedAt }],
       });
     } else {
-      currentMonthlyFoodEntry.foodEntries.push({
+      let insertPosition = getInsertPosition(
+        currentMonthlyFoodEntry.foodEntries,
+        "consumedAt",
+        consumedAt.getTime()
+      );
+
+      currentMonthlyFoodEntry.foodEntries.splice(insertPosition, 0, {
         productName,
         cost,
         calories,
-        consumedAt,
+        consumedAt: consumedAt.getTime(),
       });
+
+      currentMonthlyFoodEntry.foodEntries = [
+        ...currentMonthlyFoodEntry.foodEntries,
+      ];
+
       currentData[monthlyFoodEntryIndex] = currentMonthlyFoodEntry;
     }
     setData(currentData);
@@ -79,10 +79,6 @@ export const FoodEntryInput = ({ data, setData }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  useEffect(() => {
-    console.log(consumedAt);
-  }, [consumedAt]);
 
   return (
     <Box sx={{ textAlign: "center", mb: 4 }}>

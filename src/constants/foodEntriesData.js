@@ -86,7 +86,7 @@ export const foodEntriesData = [
     ],
   },
   {
-    monthYear: new Date(2022, 4).getTime(),
+    monthYear: new Date(2022, 3).getTime(),
     foodEntries: [
       {
         productName: "Cupcake",
