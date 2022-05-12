@@ -137,7 +137,7 @@ export const FoodEntryInput = ({ data, setData, isAdmin, users }) => {
                     onChange={(event) =>
                       setSelectedUserIndex(event.target.value)
                     }
-                    label="Age"
+                    label="User"
                   >
                     {users.map((user, index) => (
                       <MenuItem key={index.toString()} value={index}>
