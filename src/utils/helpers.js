@@ -82,3 +82,12 @@ export const areTimestampsInTheSameDay = (UTCTimestamp1, UTCTimestamp2) => {
     new Date(UTCTimestamp2).toDateString()
   );
 };
+
+export const getDateFromTimestamp = (UTCTimestamp) => {
+  let date = new Date(UTCTimestamp);
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  ).getTime();
+};
