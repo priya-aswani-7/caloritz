@@ -10,14 +10,18 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { grey } from "@mui/material/colors";
 
 export const GlobalFoodEntry = ({
+  index,
   userName,
   productName,
   cost,
   calories,
   consumedAt,
-  index,
+  handleDelete,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+  let consumedAtTimeString = getDateTimeString(consumedAt);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -27,10 +31,6 @@ export const GlobalFoodEntry = ({
     setAnchorEl(null);
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
-
-  let consumedAtTimeString = getDateTimeString(consumedAt);
   return (
     <TableRow key={index.toString()}>
       <TableCell>{index + 1}</TableCell>
@@ -50,7 +50,6 @@ export const GlobalFoodEntry = ({
           >
             <MoreVertIcon sx={{ color: grey[500] }} />
           </IconButton>
-
           <Popover
             id={id}
             open={open}
@@ -70,7 +69,14 @@ export const GlobalFoodEntry = ({
               </Typography>
             </Button>
             <br />
-            <Button variant="none" fullWidth>
+            <Button
+              variant="none"
+              fullWidth
+              onClick={() => {
+                handleDelete(index);
+                handleClose();
+              }}
+            >
               <Typography
                 variant="body2"
                 sx={{ py: 0.5, px: 1, textTransform: "none" }}
