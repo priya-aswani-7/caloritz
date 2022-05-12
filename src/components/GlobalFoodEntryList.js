@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import { cloneDeep } from "lodash";
 import { GlobalFoodEntry } from "./";
 
-export const GlobalFoodEntryList = ({ data, setData, handleEnterEditMode }) => {
+export const GlobalFoodEntryList = ({ data, setData, handleEdit }) => {
   const handleDelete = (deleteIndex) => {
     let currentData = data ? cloneDeep(data) : [];
     currentData.splice(deleteIndex, 1);
@@ -37,7 +37,7 @@ export const GlobalFoodEntryList = ({ data, setData, handleEnterEditMode }) => {
                 index={index}
                 {...foodEntry}
                 handleDelete={handleDelete}
-                handleEnterEditMode={handleEnterEditMode}
+                handleEdit={handleEdit}
               />
             ))}
           </TableBody>
