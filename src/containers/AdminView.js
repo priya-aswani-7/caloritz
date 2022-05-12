@@ -7,6 +7,20 @@ export const AdminView = () => {
   const [users, setUsers] = useState(usersData);
   const [open, setOpen] = useState(false);
   const [inEditMode, setInEditMode] = useState(false);
+  const [selectedUserIndex, setSelectedUserIndex] = useState(null);
+  const [productName, setProductName] = useState(null);
+  const [cost, setCost] = useState(null);
+  const [calories, setCalories] = useState(null);
+  const [consumedAt, setConsumedAt] = useState(null);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setInEditMode(false);
+  };
 
   return (
     <>
@@ -17,21 +31,21 @@ export const AdminView = () => {
         isAdmin={true}
         users={users}
         open={open}
-        handleClickOpen={() => setOpen(true)}
-        handleClose={() => {
-          setOpen(false);
-          setInEditMode(false);
-        }}
+        selectedUserIndex={selectedUserIndex}
+        setSelectedUserIndex={setSelectedUserIndex}
+        productName={productName}
+        setProductName={setProductName}
+        cost={cost}
+        setCost={setCost}
+        calories={calories}
+        setCalories={setCalories}
+        consumedAt={consumedAt}
+        setConsumedAt={setConsumedAt}
+        handleClickOpen={handleClickOpen}
+        handleClose={handleClose}
         inEditMode={inEditMode}
       />
-      <GlobalFoodEntryList
-        data={data}
-        setData={setData}
-        handleEnterEditMode={() => {
-          setInEditMode(true);
-          setOpen(true);
-        }}
-      />
+      <GlobalFoodEntryList data={data} setData={setData} />
     </>
   );
 };
