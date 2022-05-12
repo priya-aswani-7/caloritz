@@ -9,6 +9,11 @@ export const UserView = () => {
   const [filterStartDate, setFilterStartDate] = useState(null);
   const [filterEndDate, setFilterEndDate] = useState(null);
   const [open, setOpen] = useState(false);
+  const [selectedUserIndex, setSelectedUserIndex] = useState(null);
+  const [productName, setProductName] = useState(null);
+  const [cost, setCost] = useState(null);
+  const [calories, setCalories] = useState(null);
+  const [consumedAt, setConsumedAt] = useState(null);
 
   return (
     <>
@@ -18,6 +23,16 @@ export const UserView = () => {
         setData={setData}
         isAdmin={false}
         open={open}
+        selectedUserIndex={selectedUserIndex}
+        setSelectedUserIndex={setSelectedUserIndex}
+        productName={productName}
+        setProductName={setProductName}
+        cost={cost}
+        setCost={setCost}
+        calories={calories}
+        setCalories={setCalories}
+        consumedAt={consumedAt}
+        setConsumedAt={setConsumedAt}
         handleClickOpen={() => setOpen(true)}
         handleClose={() => setOpen(false)}
       />
