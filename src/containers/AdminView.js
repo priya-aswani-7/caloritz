@@ -22,6 +22,23 @@ export const AdminView = () => {
     setInEditMode(false);
   };
 
+  const handleEdit = (index) => {
+    setInEditMode(true);
+    let userIndex;
+    for (let i = 0; i < users?.length; i++) {
+      if (users[i].id === data[index]?.userId) {
+        userIndex = i;
+        break;
+      }
+    }
+    setSelectedUserIndex(userIndex);
+    setProductName(data[index]?.productName);
+    setCost(data[index]?.cost);
+    setCalories(data[index]?.calories);
+    setConsumedAt(data[index]?.consumedAt);
+    setOpen(true);
+  };
+
   return (
     <>
       <NavBar />
@@ -45,7 +62,11 @@ export const AdminView = () => {
         handleClose={handleClose}
         inEditMode={inEditMode}
       />
-      <GlobalFoodEntryList data={data} setData={setData} />
+      <GlobalFoodEntryList
+        data={data}
+        setData={setData}
+        handleEdit={handleEdit}
+      />
     </>
   );
 };
