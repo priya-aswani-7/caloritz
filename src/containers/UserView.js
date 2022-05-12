@@ -12,7 +12,7 @@ export const UserView = () => {
   return (
     <>
       <NavBar />
-      <FoodEntryInput data={data} setData={setData} />
+      <FoodEntryInput data={data} setData={setData} isAdmin={false} />
       <FoodEntryList
         data={data}
         monthlyBudget={monthlyBudget}
