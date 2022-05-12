@@ -22,6 +22,7 @@ export const GlobalFoodEntry = ({
   calories,
   consumedAt,
   handleDelete,
+  handleEnterEditMode,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -80,7 +81,7 @@ export const GlobalFoodEntry = ({
               horizontal: "center",
             }}
           >
-            <Button variant="none" fullWidth>
+            <Button variant="none" fullWidth onClick={handleEnterEditMode}>
               <Typography
                 variant="body2"
                 sx={{ py: 0.5, px: 1, textTransform: "none" }}
