@@ -8,11 +8,19 @@ export const UserView = () => {
   const [dailyCalorieLimit, setDailyCalorieLimit] = useState(2100);
   const [filterStartDate, setFilterStartDate] = useState(null);
   const [filterEndDate, setFilterEndDate] = useState(null);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
       <NavBar />
-      <FoodEntryInput data={data} setData={setData} isAdmin={false} />
+      <FoodEntryInput
+        data={data}
+        setData={setData}
+        isAdmin={false}
+        open={open}
+        handleClickOpen={() => setOpen(true)}
+        handleClose={() => setOpen(false)}
+      />
       <FoodEntryList
         data={data}
         monthlyBudget={monthlyBudget}
