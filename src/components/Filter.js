@@ -8,7 +8,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { Grid } from "@mui/material";
+import { Chip, Grid } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
@@ -46,6 +46,15 @@ export const Filter = ({
 
   return (
     <>
+      {filterStartDate && filterEndDate && (
+        <Chip
+          onDelete={handleClearFilter}
+          label={`${filterStartDate.toDateString().slice(4)} - ${filterEndDate
+            .toDateString()
+            .slice(4)}`}
+          color="primary"
+        />
+      )}
       <IconButton aria-label="delete" onClick={handleClickOpen}>
         <FilterListIcon />
       </IconButton>
