@@ -18,6 +18,8 @@ export const Filter = ({
   setFilterStartDate,
   setFilterEndDate,
 }) => {
+  const [startDate, setStartDate] = useState(filterStartDate);
+  const [endDate, setEndDate] = useState(filterEndDate);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -26,6 +28,12 @@ export const Filter = ({
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleApplyFilter = () => {
+    setFilterStartDate(startDate);
+    setFilterEndDate(endDate);
+    handleClose();
   };
 
   return (
@@ -53,11 +61,9 @@ export const Filter = ({
                       required
                     />
                   )}
-                  value={filterStartDate}
-                  onChange={(value) => setFilterStartDate(value)}
-                  maxDate={
-                    filterEndDate < new Date() ? filterEndDate : new Date()
-                  }
+                  value={startDate}
+                  onChange={(value) => setStartDate(value)}
+                  maxDate={endDate < new Date() ? endDate : new Date()}
                   label="Start Date"
                 />
               </LocalizationProvider>
@@ -74,10 +80,10 @@ export const Filter = ({
                       required
                     />
                   )}
-                  value={filterEndDate}
-                  onChange={(value) => setFilterEndDate(value)}
+                  value={endDate}
+                  onChange={(value) => setEndDate(value)}
                   label="End Date"
-                  minDate={filterStartDate}
+                  minDate={startDate}
                   maxDate={new Date()}
                 />
               </LocalizationProvider>
@@ -86,7 +92,7 @@ export const Filter = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Clear Filter</Button>
-          <Button onClick={handleClose}>Apply Filter</Button>
+          <Button onClick={handleApplyFilter}>Apply Filter</Button>
         </DialogActions>
       </Dialog>{" "}
     </>
