@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,7 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { FoodEntry } from "./";
+import { FoodEntry, Filter } from "./";
 
 export const FoodEntryList = ({ data, monthlyBudget, dailyCalorieLimit }) => {
   return (
@@ -16,7 +15,9 @@ export const FoodEntryList = ({ data, monthlyBudget, dailyCalorieLimit }) => {
           <TableHead>
             <TableRow>
               <TableCell>Month, Year</TableCell>
-              <TableCell />
+              <TableCell align="right">
+                <Filter />
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
