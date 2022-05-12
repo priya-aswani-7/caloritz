@@ -6,6 +6,7 @@ export const AdminView = () => {
   const [data, setData] = useState(globalFoodEntriesData);
   const [users, setUsers] = useState(usersData);
   const [open, setOpen] = useState(false);
+  const [inEditMode, setInEditMode] = useState(false);
 
   return (
     <>
@@ -17,9 +18,20 @@ export const AdminView = () => {
         users={users}
         open={open}
         handleClickOpen={() => setOpen(true)}
-        handleClose={() => setOpen(false)}
+        handleClose={() => {
+          setOpen(false);
+          setInEditMode(false);
+        }}
+        inEditMode={inEditMode}
       />
-      <GlobalFoodEntryList data={data} setData={setData} />
+      <GlobalFoodEntryList
+        data={data}
+        setData={setData}
+        handleEnterEditMode={() => {
+          setInEditMode(true);
+          setOpen(true);
+        }}
+      />
     </>
   );
 };
