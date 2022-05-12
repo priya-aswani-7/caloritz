@@ -75,3 +75,10 @@ export const getInsertPosition = (data, propertyName, value) => {
   }
   return low;
 };
+
+export const areTimestampsInTheSameDay = (UTCTimestamp1, UTCTimestamp2) => {
+  return (
+    new Date(UTCTimestamp1).toDateString() ===
+    new Date(UTCTimestamp2).toDateString()
+  );
+};
