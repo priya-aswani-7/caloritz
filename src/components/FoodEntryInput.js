@@ -16,8 +16,15 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { cloneDeep } from "lodash";
 import { getInsertPosition } from "../utils/helpers";
 
-export const FoodEntryInput = ({ data, setData, isAdmin, users }) => {
-  const [open, setOpen] = useState(false);
+export const FoodEntryInput = ({
+  data,
+  setData,
+  isAdmin,
+  users,
+  open,
+  handleClickOpen,
+  handleClose,
+}) => {
   const [selectedUserIndex, setSelectedUserIndex] = useState(null);
   const [productName, setProductName] = useState(null);
   const [cost, setCost] = useState(null);
@@ -32,7 +39,7 @@ export const FoodEntryInput = ({ data, setData, isAdmin, users }) => {
     setCost(null);
     setConsumedAt(null);
     setDatePickerOpened(null);
-    setOpen(false);
+    handleClose();
   };
 
   const handleSaveUserEntry = () => {
@@ -101,14 +108,6 @@ export const FoodEntryInput = ({ data, setData, isAdmin, users }) => {
     setData(currentData);
 
     handleClear();
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   return (
