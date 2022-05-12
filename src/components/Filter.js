@@ -36,6 +36,14 @@ export const Filter = ({
     handleClose();
   };
 
+  const handleClearFilter = () => {
+    setStartDate(null);
+    setEndDate(null);
+    setFilterStartDate(null);
+    setFilterEndDate(null);
+    handleClose();
+  };
+
   return (
     <>
       <IconButton aria-label="delete" onClick={handleClickOpen}>
@@ -91,7 +99,7 @@ export const Filter = ({
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Clear Filter</Button>
+          <Button onClick={handleClearFilter}>Clear Filter</Button>
           <Button onClick={handleApplyFilter}>Apply Filter</Button>
         </DialogActions>
       </Dialog>{" "}
