@@ -15,7 +15,7 @@ export const AdminView = () => {
         isAdmin={true}
         users={users}
       />
-      <GlobalFoodEntryList data={data} />
+      <GlobalFoodEntryList data={data} setData={setData} />
     </>
   );
 };
