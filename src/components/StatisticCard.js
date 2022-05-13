@@ -25,13 +25,13 @@ export const StatisticCard = ({
   )} - ${getDateMonthYearString(endDate)}`;
 
   return (
-    <Card sx={{ maxWidth: 275, mx: 2 }}>
+    <Card sx={{ width: 250, mx: 1.5 }}>
       <CardContent>
-        <Typography variant="h3" component="div">
+        <Typography variant="h4" sx={{ fontWeight: 200 }} component="div">
           {foodEntryCount}
         </Typography>
-        <Typography sx={{ mb: 3 }}>Food Entries</Typography>
-        <Typography variant="h5" component="div">
+        <Typography sx={{ mb: 3 }}>Added Entries</Typography>
+        <Typography sx={{ fontSize: 21, fontWeight: 200 }} component="div">
           {timePhrase.split(" ").map((word, index) => {
             return (
               <span key={index.toString()}>
