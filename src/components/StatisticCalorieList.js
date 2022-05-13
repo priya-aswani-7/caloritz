@@ -11,7 +11,9 @@ import { calorieStatisticsData } from "../constants";
 import { Typography } from "@mui/material";
 
 export const StatisticCalorieList = () => {
-  const [data, setData] = useState(calorieStatisticsData);
+  const [calorieStatistics, setCalorieStatistics] = useState(
+    calorieStatisticsData
+  );
 
   return (
     <Box sx={{ textAlign: "center" }}>
@@ -30,7 +32,7 @@ export const StatisticCalorieList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((statistic, index) => (
+              {calorieStatistics.map((statistic, index) => (
                 <StatisticCalorieEntry
                   key={index.toString()}
                   index={index}
