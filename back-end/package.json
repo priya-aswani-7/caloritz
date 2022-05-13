@@ -4,7 +4,7 @@
   "description": "The Caloritz app back-end",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon App.js"
   },
   "author": "Priya Aswani",
   "license": "ISC",
