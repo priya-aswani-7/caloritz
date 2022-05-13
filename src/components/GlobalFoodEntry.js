@@ -53,13 +53,15 @@ export const GlobalFoodEntry = ({
   };
 
   return (
-    <TableRow key={index.toString()}>
-      <TableCell>{index + 1}</TableCell>
-      <TableCell>{userName}</TableCell>
-      <TableCell>{productName}</TableCell>
-      <TableCell>{cost}</TableCell>
-      <TableCell>{calories}</TableCell>
-      <TableCell>{consumedAtTimeString}</TableCell>
+    <TableRow key={index.toString()} sx={{ color: "text.secondary" }}>
+      <TableCell sx={{ color: "text.secondary" }}>{index + 1}</TableCell>
+      <TableCell sx={{ color: "text.secondary" }}>{userName}</TableCell>
+      <TableCell sx={{ color: "text.secondary" }}>{productName}</TableCell>
+      <TableCell sx={{ color: "text.secondary" }}>{cost}</TableCell>
+      <TableCell sx={{ color: "text.secondary" }}>{calories}</TableCell>
+      <TableCell sx={{ color: "text.secondary" }}>
+        {consumedAtTimeString}
+      </TableCell>
       <TableCell>
         <div>
           <IconButton
@@ -123,9 +125,11 @@ export const GlobalFoodEntry = ({
               {consumedAtTimeString} by {userName}.
             </DialogContentText>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={handleDeleteClose}>Cancel</Button>
-            <Button onClick={handleDeleteConfirm} autoFocus>
+          <DialogActions sx={{ mr: 2, mb: 1 }}>
+            <Button variant="outlined" onClick={handleDeleteClose}>
+              Cancel
+            </Button>
+            <Button variant="contained" onClick={handleDeleteConfirm} autoFocus>
               Delete
             </Button>
           </DialogActions>
