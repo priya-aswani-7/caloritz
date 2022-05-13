@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -6,21 +6,63 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import { Box, Grid } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { cloneDeep } from "lodash";
 import { getInsertPosition } from "../utils/helpers";
 
-export const FoodEntryInput = ({ data, setData }) => {
-  const [open, setOpen] = useState(false);
+export const FoodEntryInput = ({
+  data,
+  setData,
+  isAdmin,
+  users,
+  open,
+  handleClickOpen,
+  handleClose,
+  editModeIndex,
+}) => {
+  const [selectedUserIndex, setSelectedUserIndex] = useState(null);
   const [productName, setProductName] = useState(null);
   const [cost, setCost] = useState(null);
   const [calories, setCalories] = useState(null);
   const [consumedAt, setConsumedAt] = useState(null);
   const [datePickerOpened, setDatePickerOpened] = useState(null);
 
-  const handleSave = () => {
+  useEffect(() => {
+    if (editModeIndex !== null) {
+      let userIndex;
+      for (let i = 0; i < users?.length; i++) {
+        if (users[i].id === data[editModeIndex]?.userId) {
+          userIndex = i;
+          break;
+        }
+      }
+      setSelectedUserIndex(userIndex);
+      setProductName(data[editModeIndex]?.productName);
+      setCost(data[editModeIndex]?.cost);
+      setCalories(data[editModeIndex]?.calories);
+      setConsumedAt(new Date(data[editModeIndex]?.consumedAt));
+    } else {
+      handleClear();
+    }
+  }, [editModeIndex]);
+
+  const handleClear = () => {
+    setSelectedUserIndex(null);
+    setProductName(null);
+    setCalories(null);
+    setCost(null);
+    setConsumedAt(null);
+    setDatePickerOpened(null);
+    handleClose();
+  };
+
+  const handleSaveUserEntry = () => {
     let currentData = data ? cloneDeep(data) : [];
 
     const month = consumedAt.getMonth();
@@ -64,20 +106,63 @@ export const FoodEntryInput = ({ data, setData }) => {
     }
     setData(currentData);
 
-    setProductName(null);
-    setCalories(null);
-    setCost(null);
-    setConsumedAt(null);
-    setDatePickerOpened(null);
-    setOpen(false);
+    handleClear();
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleSaveAdminEntry = () => {
+    let insertPosition = getInsertPosition(
+      data,
+      "consumedAt",
+      consumedAt.getTime()
+    );
+
+    let currentData = data ? cloneDeep(data) : [];
+    currentData.splice(insertPosition, 0, {
+      userName: users[selectedUserIndex]?.name,
+      userId: users[selectedUserIndex]?.id,
+      productName,
+      cost,
+      calories,
+      consumedAt: consumedAt.getTime(),
+    });
+    setData(currentData);
+
+    handleClear();
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleEdit = () => {
+    let currentData = data ? cloneDeep(data) : [];
+
+    if (consumedAt.getTime() === data[editModeIndex].consumedAt) {
+      currentData[editModeIndex] = {
+        userName: users[selectedUserIndex]?.name,
+        userId: users[selectedUserIndex]?.id,
+        productName,
+        cost,
+        calories,
+        consumedAt: consumedAt.getTime(),
+      };
+    } else {
+      let insertPosition = getInsertPosition(
+        data,
+        "consumedAt",
+        consumedAt.getTime()
+      );
+
+      currentData.splice(insertPosition, 0, {
+        userName: users[selectedUserIndex]?.name,
+        userId: users[selectedUserIndex]?.id,
+        productName,
+        cost,
+        calories,
+        consumedAt: consumedAt.getTime(),
+      });
+      currentData.splice(editModeIndex + 1, 1);
+    }
+
+    setData(currentData);
+
+    handleClear();
   };
 
   return (
@@ -86,19 +171,48 @@ export const FoodEntryInput = ({ data, setData }) => {
         Add new food entry
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
-        <DialogTitle>Add new food entry</DialogTitle>
+        <DialogTitle>
+          {editModeIndex !== null ? "Edit food entry" : "Add new food entry"}
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText mb={1}>
-            To create a new food entry, make sure to provide details of Product
-            Name, Cost, Calories and Date/Time Consumed At, as indicated below.{" "}
+          <DialogContentText mb={2}>
+            To {editModeIndex !== null ? "edit the" : "create a new"} food
+            entry, make sure to{" "}
+            {editModeIndex !== null ? "make desired changes to" : "provide"}{" "}
+            details of Product Name, Cost, Calories and Date/Time Consumed At,
+            as indicated below.{" "}
           </DialogContentText>
           <Grid container spacing={2}>
+            {isAdmin && (
+              <Grid item xs={12} sm={12}>
+                <FormControl variant="standard" fullWidth required>
+                  <InputLabel id="demo-simple-select-standard-label">
+                    User
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={selectedUserIndex ?? ""}
+                    onChange={(event) =>
+                      setSelectedUserIndex(event.target.value)
+                    }
+                    label="User"
+                  >
+                    {users.map((user, index) => (
+                      <MenuItem key={index.toString()} value={index}>
+                        {user.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            )}
             <Grid item xs={12} sm={8}>
               <TextField
                 label="Product Name"
                 margin="none"
                 variant="standard"
-                value={productName}
+                value={productName ?? ""}
                 onChange={(event) => setProductName(event.target.value)}
                 fullWidth
                 required
@@ -114,7 +228,7 @@ export const FoodEntryInput = ({ data, setData }) => {
                 type="Number"
                 margin="none"
                 variant="standard"
-                value={cost}
+                value={cost ?? ""}
                 onChange={(event) =>
                   setCost(parseFloat(event.target.value) || "")
                 }
@@ -136,7 +250,7 @@ export const FoodEntryInput = ({ data, setData }) => {
                 type="Number"
                 margin="none"
                 variant="standard"
-                value={calories}
+                value={calories ?? ""}
                 onChange={(event) =>
                   setCalories(parseFloat(event.target.value) || "")
                 }
@@ -187,11 +301,21 @@ export const FoodEntryInput = ({ data, setData }) => {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+        <DialogActions sx={{ mr: 2, mb: 1 }}>
+          <Button onClick={handleClose} variant="outlined">
+            Cancel
+          </Button>
           <Button
-            onClick={handleSave}
+            variant="contained"
+            onClick={
+              isAdmin
+                ? editModeIndex !== null
+                  ? handleEdit
+                  : handleSaveAdminEntry
+                : handleSaveUserEntry
+            }
             disabled={
+              (isAdmin && selectedUserIndex === null) ||
               !productName ||
               !cost ||
               !calories ||
@@ -206,7 +330,7 @@ export const FoodEntryInput = ({ data, setData }) => {
               consumedAt > new Date()
             }
           >
-            Save
+            {editModeIndex !== null ? "Save Changes" : "Create"}
           </Button>
         </DialogActions>
       </Dialog>

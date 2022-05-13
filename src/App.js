@@ -1,27 +1,19 @@
 import { useState } from "react";
-import { NavBar, FoodEntryList, FoodEntryInput } from "./components";
-import { foodEntriesData } from "./constants";
+import { ThemeProvider } from "@mui/material/styles";
+import { AdminView, UserView } from "./containers";
+import { BrowserRouter as Router } from "react-router-dom";
+import { theme } from "./utils/theme";
+import { CssBaseline } from "@mui/material";
 
 export const App = () => {
-  const [data, setData] = useState(foodEntriesData);
-  const [monthlyBudget, setMonthlyBudget] = useState(1000);
-  const [dailyCalorieLimit, setDailyCalorieLimit] = useState(2100);
-  const [filterStartDate, setFilterStartDate] = useState(null);
-  const [filterEndDate, setFilterEndDate] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(true);
 
   return (
-    <>
-      <NavBar />
-      <FoodEntryInput data={data} setData={setData} />
-      <FoodEntryList
-        data={data}
-        monthlyBudget={monthlyBudget}
-        dailyCalorieLimit={dailyCalorieLimit}
-        filterStartDate={filterStartDate}
-        filterEndDate={filterEndDate}
-        setFilterStartDate={setFilterStartDate}
-        setFilterEndDate={setFilterEndDate}
-      />
-    </>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {isAdmin ? <AdminView /> : <UserView />}
+      </ThemeProvider>
+    </Router>
   );
 };

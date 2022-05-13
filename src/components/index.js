@@ -1,5 +1,12 @@
-export { NavBar } from "./NavBar";
 export { Filter } from "./Filter";
 export { FoodEntry } from "./FoodEntry";
 export { FoodEntryInput } from "./FoodEntryInput";
 export { FoodEntryList } from "./FoodEntryList";
+export { GlobalFoodEntry } from "./GlobalFoodEntry";
+export { GlobalFoodEntryList } from "./GlobalFoodEntryList";
+export { NavBar } from "./NavBar";
+export { StatisticCalorieEntry } from "./StatisticCalorieEntry";
+export { StatisticCalorieList } from "./StatisticCalorieList";
+export { StatisticCard } from "./StatisticCard";
+export { StatisticCardSet } from "./StatisticCardSet";
+export { Statistics } from "./Statistics";
