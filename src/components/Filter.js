@@ -11,6 +11,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { Chip, Grid } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { getDateFromTimestamp } from "../utils/helpers";
 
 export const Filter = ({
   filterStartDate,
@@ -78,12 +79,16 @@ export const Filter = ({
                       required
                       error={
                         startDate > new Date() ||
-                        (endDate && startDate > endDate)
+                        (endDate &&
+                          getDateFromTimestamp(startDate) >
+                            getDateFromTimestamp(endDate))
                       }
                       helperText={
                         startDate > new Date()
                           ? "Start Date cannot be in the future"
-                          : endDate && startDate > endDate
+                          : endDate &&
+                            getDateFromTimestamp(startDate) >
+                              getDateFromTimestamp(endDate)
                           ? "Start Date cannot be greater than End Date"
                           : null
                       }
@@ -114,12 +119,18 @@ export const Filter = ({
                       required
                       error={
                         endDate > new Date() ||
-                        (startDate && endDate && endDate < startDate)
+                        (startDate &&
+                          endDate &&
+                          getDateFromTimestamp(endDate) <
+                            getDateFromTimestamp(startDate))
                       }
                       helperText={
                         endDate > new Date()
                           ? "End Date cannot be in the future"
-                          : startDate && endDate && endDate < startDate
+                          : startDate &&
+                            endDate &&
+                            getDateFromTimestamp(endDate) <
+                              getDateFromTimestamp(startDate)
                           ? "End Date cannot be smaller than Start Date"
                           : null
                       }
@@ -135,17 +146,24 @@ export const Filter = ({
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClearFilter}>Clear Filter</Button>
+        <DialogActions sx={{ mr: 2, mb: 1 }}>
+          <Button onClick={handleClearFilter} variant="outlined">
+            Clear Filter
+          </Button>
           <Button
+            variant="contained"
             onClick={handleApplyFilter}
             disabled={
               !startDate ||
               !endDate ||
               startDate > new Date() ||
-              (endDate && startDate > endDate) ||
+              (endDate &&
+                getDateFromTimestamp(startDate) >
+                  getDateFromTimestamp(endDate)) ||
               endDate > new Date() ||
-              (startDate && endDate && endDate < startDate)
+              (startDate &&
+                endDate &&
+                getDateFromTimestamp(endDate) < getDateFromTimestamp(startDate))
             }
           >
             Apply Filter
