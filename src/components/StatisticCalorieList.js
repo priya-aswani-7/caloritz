@@ -17,7 +17,11 @@ export const StatisticCalorieList = () => {
 
   return (
     <Box sx={{ textAlign: "center" }}>
-      <Typography variant="overline" sx={{ fontWeight: 100, fontSize: 18 }}>
+      <Typography
+        variant="overline"
+        sx={{ fontWeight: 100, fontSize: 18 }}
+        color="primary"
+      >
         Average calorie consumption of users for the last week
       </Typography>
 
