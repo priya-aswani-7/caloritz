@@ -6,6 +6,7 @@ export { GlobalFoodEntry } from "./GlobalFoodEntry";
 export { GlobalFoodEntryList } from "./GlobalFoodEntryList";
 export { NavBar } from "./NavBar";
 export { StatisticCalorieEntry } from "./StatisticCalorieEntry";
+export { StatisticCalorieList } from "./StatisticCalorieList";
 export { StatisticCard } from "./StatisticCard";
 export { StatisticCardSet } from "./StatisticCardSet";
 export { Statistics } from "./Statistics";
