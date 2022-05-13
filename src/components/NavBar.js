@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
 import { Box, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -36,10 +37,17 @@ export const NavBar = (props) => {
             </Typography>
             {props.isAdmin && (
               <Box>
-                <Button color="inherit" sx={{ mr: 2 }}>
+                <Button
+                  color="inherit"
+                  sx={{ mr: 2 }}
+                  component={Link}
+                  to={"/"}
+                >
                   Food Entries
                 </Button>
-                <Button color="inherit">Statistics</Button>
+                <Button color="inherit" component={Link} to={"/statistics"}>
+                  Statistics
+                </Button>
               </Box>
             )}
           </Toolbar>
