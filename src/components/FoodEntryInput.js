@@ -133,14 +133,33 @@ export const FoodEntryInput = ({
   const handleEdit = () => {
     let currentData = data ? cloneDeep(data) : [];
 
-    currentData[editModeIndex] = {
-      userName: users[selectedUserIndex]?.name,
-      userId: users[selectedUserIndex]?.id,
-      productName,
-      cost,
-      calories,
-      consumedAt: consumedAt.getTime(),
-    };
+    if (consumedAt.getTime() === data[editModeIndex].consumedAt) {
+      currentData[editModeIndex] = {
+        userName: users[selectedUserIndex]?.name,
+        userId: users[selectedUserIndex]?.id,
+        productName,
+        cost,
+        calories,
+        consumedAt: consumedAt.getTime(),
+      };
+    } else {
+      let insertPosition = getInsertPosition(
+        data,
+        "consumedAt",
+        consumedAt.getTime()
+      );
+
+      currentData.splice(insertPosition, 0, {
+        userName: users[selectedUserIndex]?.name,
+        userId: users[selectedUserIndex]?.id,
+        productName,
+        cost,
+        calories,
+        consumedAt: consumedAt.getTime(),
+      });
+      currentData.splice(editModeIndex + 1, 1);
+    }
+
     setData(currentData);
 
     handleClear();
