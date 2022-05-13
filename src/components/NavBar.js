@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -27,13 +27,21 @@ HideOnScroll.propTypes = {
 
 export const NavBar = (props) => {
   return (
-    <Box mb={3}>
+    <Box sx={{ flexGrow: 1 }} mb={3}>
       <HideOnScroll {...props}>
         <AppBar>
           <Toolbar>
-            <Typography variant="h6" component="div">
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Caloritz.
             </Typography>
+            {props.isAdmin && (
+              <Box>
+                <Button color="inherit" sx={{ mr: 2 }}>
+                  Food Entries
+                </Button>
+                <Button color="inherit">Statistics</Button>
+              </Box>
+            )}
           </Toolbar>
         </AppBar>
       </HideOnScroll>
