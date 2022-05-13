@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
+const router = require("./routes/Api");
 dotenv.config();
 
 mongoose
@@ -15,9 +16,6 @@ const port = process.env.PORT || 8080;
 
 app.use(morgan("dev"));
 app.use(bodyParser.json());
-
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
+app.use("/", router);
 
 app.listen(port, () => console.log(`Node.js API listening on port ${port}`));
