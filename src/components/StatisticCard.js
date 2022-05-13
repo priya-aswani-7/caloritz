@@ -31,7 +31,7 @@ export const StatisticCard = ({
           {foodEntryCount}
         </Typography>
         <Typography sx={{ mb: 3 }}>Added Entries</Typography>
-        <Typography sx={{ fontSize: 21, fontWeight: 200 }} component="div">
+        <Typography sx={{ fontSize: 16, fontWeight: 200 }} component="div">
           {timePhrase.split(" ").map((word, index) => {
             return (
               <span key={index.toString()}>
