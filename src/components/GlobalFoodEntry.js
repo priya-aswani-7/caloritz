@@ -50,7 +50,6 @@ export const GlobalFoodEntry = ({
   const handleDeleteConfirm = () => {
     handleDelete(index);
     handleDeleteClose();
-    //handleClose();
   };
 
   return (
