@@ -30,4 +30,32 @@ router.get("/:resource", (req, res) => {
     });
 });
 
+router.get("/:resource/:id", (req, res) => {
+  const resource = req.params.resource;
+  const id = req.params.id;
+  const controller = controllers[resource];
+
+  if (!controller) {
+    return res.json({
+      confirmation: "Fail",
+      message: "Invalid request. Resource undefined.",
+    });
+  }
+
+  controller
+    .getById(id)
+    .then((data) => {
+      res.json({
+        confirmation: "success",
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.json({
+        confirmation: "fail",
+        error: error.message,
+      });
+    });
+});
+
 module.exports = router;
