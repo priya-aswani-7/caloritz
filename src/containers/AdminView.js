@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FoodEntryInput, GlobalFoodEntryList, NavBar } from "../components";
 import { globalFoodEntriesData, usersData } from "../constants";
 
@@ -24,7 +24,7 @@ export const AdminView = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar isAdmin={true} />
       <FoodEntryInput
         data={data}
         setData={setData}
