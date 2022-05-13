@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FoodEntryInput, GlobalFoodEntryList, NavBar } from "../components";
 import { globalFoodEntriesData, usersData } from "../constants";
+import { Route, Routes } from "react-router-dom";
 
 export const AdminView = () => {
   const [data, setData] = useState(globalFoodEntriesData);
@@ -25,21 +26,32 @@ export const AdminView = () => {
   return (
     <>
       <NavBar isAdmin={true} />
-      <FoodEntryInput
-        data={data}
-        setData={setData}
-        isAdmin={true}
-        users={users}
-        open={open}
-        handleClickOpen={handleClickOpen}
-        handleClose={handleClose}
-        editModeIndex={editModeIndex}
-      />
-      <GlobalFoodEntryList
-        data={data}
-        setData={setData}
-        handleEdit={handleEdit}
-      />
+      <Routes>
+        <Route path="/statistics" exact element={<></>}></Route>
+        <Route
+          path="/"
+          exact
+          element={
+            <>
+              <FoodEntryInput
+                data={data}
+                setData={setData}
+                isAdmin={true}
+                users={users}
+                open={open}
+                handleClickOpen={handleClickOpen}
+                handleClose={handleClose}
+                editModeIndex={editModeIndex}
+              />
+              <GlobalFoodEntryList
+                data={data}
+                setData={setData}
+                handleEdit={handleEdit}
+              />
+            </>
+          }
+        ></Route>
+      </Routes>
     </>
   );
 };
