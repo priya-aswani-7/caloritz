@@ -3,7 +3,7 @@ const yesterday = now - 24 * 3600 * 1000;
 const lastWeek = yesterday - 24 * 6 * 3600 * 1000;
 const lastToLastWeek = lastWeek - 24 * 6 * 3600 * 1000;
 
-export const statisticsData = [
+export const foodEntryStatisticsData = [
   {
     foodEntryCount: 350,
     timePhrase: "in the last fortnight",
