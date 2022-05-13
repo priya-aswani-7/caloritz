@@ -7,6 +7,7 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
 import { Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { theme } from "../utils/theme";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -30,7 +31,7 @@ export const NavBar = (props) => {
   return (
     <Box sx={{ flexGrow: 1 }} mb={3}>
       <HideOnScroll {...props}>
-        <AppBar>
+        <AppBar style={{ backgroundColor: theme.palette.primary.main }}>
           <Toolbar>
             <Typography
               variant="h6"
