@@ -121,7 +121,8 @@ export const FoodEntry = ({
                           {dailyCalorieLimitExceeeded && (
                             <Chip
                               label="Daily calorie limit exceeded"
-                              color="warning"
+                              variant="outlined"
+                              color="secondary"
                               size="small"
                             />
                           )}
