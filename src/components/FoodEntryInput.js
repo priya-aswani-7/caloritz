@@ -46,7 +46,7 @@ export const FoodEntryInput = ({
       setProductName(data[editModeIndex]?.productName);
       setCost(data[editModeIndex]?.cost);
       setCalories(data[editModeIndex]?.calories);
-      setConsumedAt(data[editModeIndex]?.consumedAt);
+      setConsumedAt(new Date(data[editModeIndex]?.consumedAt));
     } else {
       handleClear();
     }
@@ -125,6 +125,22 @@ export const FoodEntryInput = ({
       calories,
       consumedAt: consumedAt.getTime(),
     });
+    setData(currentData);
+
+    handleClear();
+  };
+
+  const handleEdit = () => {
+    let currentData = data ? cloneDeep(data) : [];
+
+    currentData[editModeIndex] = {
+      userName: users[selectedUserIndex]?.name,
+      userId: users[selectedUserIndex]?.id,
+      productName,
+      cost,
+      calories,
+      consumedAt: consumedAt.getTime(),
+    };
     setData(currentData);
 
     handleClear();
@@ -269,7 +285,13 @@ export const FoodEntryInput = ({
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button
-            onClick={isAdmin ? handleSaveAdminEntry : handleSaveUserEntry}
+            onClick={
+              isAdmin
+                ? editModeIndex !== null
+                  ? handleEdit
+                  : handleSaveAdminEntry
+                : handleSaveUserEntry
+            }
             disabled={
               (isAdmin && selectedUserIndex === null) ||
               !productName ||
