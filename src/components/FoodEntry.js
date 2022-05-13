@@ -112,12 +112,25 @@ export const FoodEntry = ({
 
                     return (
                       <TableRow key={index.toString()}>
-                        <TableCell>{index + 1}</TableCell>
-                        <TableCell>{foodEntry.productName}</TableCell>
-                        <TableCell>{foodEntry.cost}</TableCell>
-                        <TableCell>{foodEntry.calories}</TableCell>
-                        <TableCell>{consumedAtTimeString}</TableCell>
-                        <TableCell align="right">
+                        <TableCell sx={{ color: "text.secondary" }}>
+                          {index + 1}
+                        </TableCell>
+                        <TableCell sx={{ color: "text.secondary" }}>
+                          {foodEntry.productName}
+                        </TableCell>
+                        <TableCell sx={{ color: "text.secondary" }}>
+                          {foodEntry.cost}
+                        </TableCell>
+                        <TableCell sx={{ color: "text.secondary" }}>
+                          {foodEntry.calories}
+                        </TableCell>
+                        <TableCell sx={{ color: "text.secondary" }}>
+                          {consumedAtTimeString}
+                        </TableCell>
+                        <TableCell
+                          sx={{ color: "text.secondary" }}
+                          align="right"
+                        >
                           {dailyCalorieLimitExceeeded && (
                             <Chip
                               label="Daily calorie limit exceeded"
