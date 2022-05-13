@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -22,21 +22,35 @@ export const FoodEntryInput = ({
   isAdmin,
   users,
   open,
-  selectedUserIndex,
-  setSelectedUserIndex,
-  productName,
-  setProductName,
-  cost,
-  setCost,
-  calories,
-  setCalories,
-  consumedAt,
-  setConsumedAt,
   handleClickOpen,
   handleClose,
-  inEditMode,
+  editModeIndex,
 }) => {
+  const [selectedUserIndex, setSelectedUserIndex] = useState(null);
+  const [productName, setProductName] = useState(null);
+  const [cost, setCost] = useState(null);
+  const [calories, setCalories] = useState(null);
+  const [consumedAt, setConsumedAt] = useState(null);
   const [datePickerOpened, setDatePickerOpened] = useState(null);
+
+  useEffect(() => {
+    if (editModeIndex !== null) {
+      let userIndex;
+      for (let i = 0; i < users?.length; i++) {
+        if (users[i].id === data[editModeIndex]?.userId) {
+          userIndex = i;
+          break;
+        }
+      }
+      setSelectedUserIndex(userIndex);
+      setProductName(data[editModeIndex]?.productName);
+      setCost(data[editModeIndex]?.cost);
+      setCalories(data[editModeIndex]?.calories);
+      setConsumedAt(data[editModeIndex]?.consumedAt);
+    } else {
+      handleClear();
+    }
+  }, [editModeIndex]);
 
   const handleClear = () => {
     setSelectedUserIndex(null);
@@ -123,14 +137,15 @@ export const FoodEntryInput = ({
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
         <DialogTitle>
-          {inEditMode ? "Edit food entry" : "Add new food entry"}
+          {editModeIndex !== null ? "Edit food entry" : "Add new food entry"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText mb={2}>
-            To {inEditMode ? "edit the" : "create a new"} food entry, make sure
-            to {inEditMode ? "make desired changes to" : "provide"} details of
-            Product Name, Cost, Calories and Date/Time Consumed At, as indicated
-            below.{" "}
+            To {editModeIndex !== null ? "edit the" : "create a new"} food
+            entry, make sure to{" "}
+            {editModeIndex !== null ? "make desired changes to" : "provide"}{" "}
+            details of Product Name, Cost, Calories and Date/Time Consumed At,
+            as indicated below.{" "}
           </DialogContentText>
           <Grid container spacing={2}>
             {isAdmin && (
@@ -271,7 +286,7 @@ export const FoodEntryInput = ({
               consumedAt > new Date()
             }
           >
-            {inEditMode ? "Save Changes" : "Create"}
+            {editModeIndex !== null ? "Save Changes" : "Create"}
           </Button>
         </DialogActions>
       </Dialog>
