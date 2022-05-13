@@ -13,7 +13,11 @@ export const StatisticCardSet = () => {
 
   return (
     <Box sx={{ mx: 5, textAlign: "center", mb: 4 }}>
-      <Typography variant="overline" sx={{ fontWeight: 100, fontSize: 18 }}>
+      <Typography
+        variant="overline"
+        sx={{ fontWeight: 100, fontSize: 18 }}
+        color="primary"
+      >
         Food entry counts of the last week vs the last fortnight
       </Typography>
       <Typography variant="body1" sx={{ fontWeight: 100, mb: 2 }}>
