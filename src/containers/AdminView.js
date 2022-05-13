@@ -8,7 +8,7 @@ export const AdminView = () => {
   const [data, setData] = useState(globalFoodEntriesData);
   const [users, setUsers] = useState(usersData);
   const [open, setOpen] = useState(false);
-  const [editModeIndex, setEditModeIndex] = useState(false);
+  const [editModeIndex, setEditModeIndex] = useState(null);
 
   const handleClickOpen = () => {
     setOpen(true);
