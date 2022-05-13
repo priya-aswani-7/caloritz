@@ -39,6 +39,7 @@ export const GlobalFoodEntry = ({
   };
 
   const handleDeleteClick = () => {
+    handleClose();
     setDeleteOpen(true);
   };
 
@@ -49,7 +50,7 @@ export const GlobalFoodEntry = ({
   const handleDeleteConfirm = () => {
     handleDelete(index);
     handleDeleteClose();
-    handleClose();
+    //handleClose();
   };
 
   return (
@@ -81,7 +82,14 @@ export const GlobalFoodEntry = ({
               horizontal: "center",
             }}
           >
-            <Button variant="none" fullWidth onClick={() => handleEdit(index)}>
+            <Button
+              variant="none"
+              fullWidth
+              onClick={() => {
+                handleClose();
+                handleEdit(index);
+              }}
+            >
               <Typography
                 variant="body2"
                 sx={{ py: 0.5, px: 1, textTransform: "none" }}
@@ -98,31 +106,31 @@ export const GlobalFoodEntry = ({
                 Delete
               </Typography>
             </Button>
-            <Dialog
-              open={deleteOpen}
-              onClose={handleDeleteClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">
-                Are you sure you want to delete this entry?
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  This will permanently delete the entry for {productName} ($
-                  {cost}, {calories} calories), as consumed at{" "}
-                  {consumedAtTimeString} by {userName}.
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleDeleteClose}>Cancel</Button>
-                <Button onClick={handleDeleteConfirm} autoFocus>
-                  Delete
-                </Button>
-              </DialogActions>
-            </Dialog>
           </Popover>
         </div>
+        <Dialog
+          open={deleteOpen}
+          onClose={handleDeleteClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Are you sure you want to delete this entry?
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              This will permanently delete the entry for {productName} ($
+              {cost}, {calories} calories), as consumed at{" "}
+              {consumedAtTimeString} by {userName}.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDeleteClose}>Cancel</Button>
+            <Button onClick={handleDeleteConfirm} autoFocus>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
       </TableCell>
     </TableRow>
   );
