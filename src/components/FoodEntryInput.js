@@ -301,9 +301,12 @@ export const FoodEntryInput = ({
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+        <DialogActions sx={{ mr: 2, mb: 1 }}>
+          <Button onClick={handleClose} variant="outlined">
+            Cancel
+          </Button>
           <Button
+            variant="contained"
             onClick={
               isAdmin
                 ? editModeIndex !== null
