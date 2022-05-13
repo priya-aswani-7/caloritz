@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FoodEntryInput, GlobalFoodEntryList, NavBar } from "../components";
 import { globalFoodEntriesData, usersData } from "../constants";
 import { Route, Routes } from "react-router-dom";
+import { Statistics } from "../components/Statistics";
 
 export const AdminView = () => {
   const [data, setData] = useState(globalFoodEntriesData);
@@ -27,7 +28,7 @@ export const AdminView = () => {
     <>
       <NavBar isAdmin={true} />
       <Routes>
-        <Route path="/statistics" exact element={<></>}></Route>
+        <Route path="/statistics" exact element={<Statistics />}></Route>
         <Route
           path="/"
           exact
