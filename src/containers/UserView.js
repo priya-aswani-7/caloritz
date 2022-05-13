@@ -20,6 +20,7 @@ export const UserView = () => {
         open={open}
         handleClickOpen={() => setOpen(true)}
         handleClose={() => setOpen(false)}
+        editModeIndex={null}
       />
       <FoodEntryList
         data={data}
