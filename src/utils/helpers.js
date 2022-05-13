@@ -91,3 +91,9 @@ export const getDateFromTimestamp = (UTCTimestamp) => {
     date.getDate()
   ).getTime();
 };
+
+export const getDateMonthYearString = (UTCTimestamp) => {
+  return (
+    new Date(UTCTimestamp).getDate() + " " + getMonthYearString(UTCTimestamp)
+  );
+};
