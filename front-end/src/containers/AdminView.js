@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { FoodEntryInput, GlobalFoodEntryList, NavBar } from "../components";
+import {
+  ErrorAlert,
+  FoodEntryInput,
+  GlobalFoodEntryList,
+  LoadingSpinner,
+  NavBar,
+} from "../components";
 import { usersData } from "../constants";
 import { Route, Routes } from "react-router-dom";
 import { Statistics } from "../components/Statistics";
@@ -10,11 +16,16 @@ export const AdminView = () => {
   const [users, setUsers] = useState(usersData);
   const [open, setOpen] = useState(false);
   const [editModeIndex, setEditModeIndex] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     getFoodEntries(setData, setError);
   }, []);
+
+  useEffect(() => {
+    data !== null && setLoading(false);
+  }, [data]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,29 +44,36 @@ export const AdminView = () => {
   return (
     <>
       <NavBar isAdmin={true} />
+
       <Routes>
         <Route path="/statistics" exact element={<Statistics />}></Route>
         <Route
           path="/"
           exact
           element={
-            <>
-              <FoodEntryInput
-                data={data}
-                setData={setData}
-                isAdmin={true}
-                users={users}
-                open={open}
-                handleClickOpen={handleClickOpen}
-                handleClose={handleClose}
-                editModeIndex={editModeIndex}
-              />
-              <GlobalFoodEntryList
-                data={data}
-                setData={setData}
-                handleEdit={handleEdit}
-              />
-            </>
+            error ? (
+              <ErrorAlert />
+            ) : loading ? (
+              <LoadingSpinner />
+            ) : (
+              <>
+                <FoodEntryInput
+                  data={data}
+                  setData={setData}
+                  isAdmin={true}
+                  users={users}
+                  open={open}
+                  handleClickOpen={handleClickOpen}
+                  handleClose={handleClose}
+                  editModeIndex={editModeIndex}
+                />
+                <GlobalFoodEntryList
+                  data={data}
+                  setData={setData}
+                  handleEdit={handleEdit}
+                />
+              </>
+            )
           }
         ></Route>
       </Routes>
