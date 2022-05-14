@@ -42,3 +42,17 @@ export const editFoodEntry = async (foodEntryId, updatedFoodEntry) => {
     .then((data) => data.data)
     .catch((error) => error);
 };
+
+export const deleteFoodEntry = async (foodEntryId) => {
+  return fetch(`${BASE_URL}/foodentry/${foodEntryId}`, {
+    mode: "cors",
+    method: "delete",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => data.data)
+    .catch((error) => error);
+};
