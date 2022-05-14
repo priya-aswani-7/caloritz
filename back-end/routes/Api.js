@@ -60,6 +60,24 @@ router.get("/:resource/:id", (req, res) => {
     });
 });
 
+router.get("/user/:id/foodentry", (req, res) => {
+  const id = req.params.id;
+
+  FoodEntryController.getByUserId(id)
+    .then((data) => {
+      res.json({
+        confirmation: "success",
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.json({
+        confirmation: "fail",
+        error: error.message,
+      });
+    });
+});
+
 router.post("/:resource", (req, res) => {
   const resource = req.params.resource;
   const data = req.body;
