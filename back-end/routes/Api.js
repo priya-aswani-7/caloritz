@@ -1,5 +1,6 @@
 const express = require("express");
 const controllers = require("../controllers");
+const FoodEntryController = require("../controllers/FoodEntryController");
 const UserController = require("../controllers/UserController");
 const router = express.Router();
 
@@ -36,7 +37,7 @@ router.get("/:resource/:id", (req, res) => {
   const id = req.params.id;
   const controller = controllers[resource];
 
-  if (!controller) {
+  if (!controller || controller === FoodEntryController) {
     return res.json({
       confirmation: "Fail",
       message: "Invalid request.",
