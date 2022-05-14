@@ -1,3 +1,4 @@
+export { AdminFoodEntries } from "./AdminFoodEntries";
 export { ErrorAlert } from "./ErrorAlert";
 export { Filter } from "./Filter";
 export { FoodEntry } from "./FoodEntry";
