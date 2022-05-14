@@ -34,7 +34,7 @@ export const FoodEntryList = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((monthlyFoodEntry, index) => (
+            {data?.map((monthlyFoodEntry, index) => (
               <FoodEntry
                 key={index.toString()}
                 monthlyFoodEntry={monthlyFoodEntry}
