@@ -19,7 +19,7 @@ export const FoodEntryList = ({
 }) => {
   return data?.length > 0 ? (
     <TableContainer>
-      <Box sx={{ maxWidth: 875, px: 5, mx: "auto" }}>
+      <Box sx={{ maxWidth: 925, px: 5, mx: "auto" }}>
         <Table aria-label="collapsible table" size="small">
           <TableHead>
             <TableRow>
