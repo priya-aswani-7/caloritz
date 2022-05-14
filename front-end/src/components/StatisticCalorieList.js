@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,14 +6,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { StatisticCalorieEntry } from "./";
-import { calorieStatisticsData } from "../constants";
 import { Typography } from "@mui/material";
 
-export const StatisticCalorieList = () => {
-  const [calorieStatistics, setCalorieStatistics] = useState(
-    calorieStatisticsData
-  );
-
+export const StatisticCalorieList = ({ calorieStatistics }) => {
   return (
     <Box sx={{ textAlign: "center" }}>
       <Typography
