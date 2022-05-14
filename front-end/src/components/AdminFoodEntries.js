@@ -19,14 +19,14 @@ export const AdminFoodEntries = () => {
     getFoodEntries()
       .then((data) => {
         setData(data);
-        setError(error ?? null);
+        setError(null);
       })
       .catch((error) => setError(error));
 
     getUsers()
       .then((data) => {
         setUsers(data);
-        setError(error ?? null);
+        setError(null);
       })
       .catch((error) => setError(error));
   }, []);
