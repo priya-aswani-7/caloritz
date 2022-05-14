@@ -17,7 +17,7 @@ module.exports = {
         .catch((error) =>
           reject(
             error.message.includes("Cast to ObjectId failed")
-              ? new Error(`Could not find user with ID ${id}`)
+              ? new Error(`User with ID ${id} does not exist.`)
               : error
           )
         );
