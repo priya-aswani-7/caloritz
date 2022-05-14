@@ -1,10 +1,15 @@
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { StatisticCard } from ".";
 import { getDateMonthYearString } from "../utils/helpers";
 
 export const StatisticCardSet = ({ foodEntryStatistics }) => {
-  const nowString = getDateMonthYearString(new Date().getTime());
+  const [nowString, setNowString] = useState(null);
+
+  useEffect(() => {
+    setNowString(getDateMonthYearString(foodEntryStatistics?.now));
+  }, [foodEntryStatistics]);
 
   return (
     <Box sx={{ mx: 5, textAlign: "center", mb: 4 }}>
@@ -24,7 +29,7 @@ export const StatisticCardSet = ({ foodEntryStatistics }) => {
           justifyContent: "center",
         }}
       >
-        {foodEntryStatistics?.map((statistic, index) => (
+        {foodEntryStatistics?.foodEntryCounts?.map((statistic, index) => (
           <StatisticCard key={index.toString()} {...statistic} />
         ))}
       </Box>
