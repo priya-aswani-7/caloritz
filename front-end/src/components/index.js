@@ -4,6 +4,7 @@ export { FoodEntryInput } from "./FoodEntryInput";
 export { FoodEntryList } from "./FoodEntryList";
 export { GlobalFoodEntry } from "./GlobalFoodEntry";
 export { GlobalFoodEntryList } from "./GlobalFoodEntryList";
+export { LoadingSpinner } from "./LoadingSpinner";
 export { NavBar } from "./NavBar";
 export { StatisticCalorieEntry } from "./StatisticCalorieEntry";
 export { StatisticCalorieList } from "./StatisticCalorieList";
