@@ -15,7 +15,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { cloneDeep } from "lodash";
 import { getInsertPosition } from "../utils/helpers";
-import { editFoodEntry } from "../services/api";
+import { createFoodEntry, editFoodEntry } from "../services/api";
 
 export const FoodEntryInput = ({
   data,
@@ -113,24 +113,39 @@ export const FoodEntryInput = ({
   };
 
   const handleSaveAdminEntry = () => {
-    let insertPosition = getInsertPosition(
-      data,
-      "consumedAt",
-      consumedAt.getTime()
-    );
-
-    let currentData = data ? cloneDeep(data) : [];
-    currentData.splice(insertPosition, 0, {
-      userName: users[selectedUserIndex]?.name,
-      userId: users[selectedUserIndex]?._id,
+    handleClose();
+    setLoading(true);
+    createFoodEntry({
+      user: users[selectedUserIndex]?._id,
       productName,
       cost,
       calories,
       consumedAt: consumedAt.getTime(),
-    });
-    setData(currentData);
+    })
+      .then((result) => {
+        setError(null);
+        let insertPosition = getInsertPosition(
+          data,
+          "consumedAt",
+          consumedAt.getTime()
+        );
 
-    handleClear();
+        let currentData = data ? cloneDeep(data) : [];
+        currentData.splice(insertPosition, 0, {
+          _id: result._id,
+          userName: users[selectedUserIndex]?.name,
+          userId: users[selectedUserIndex]?._id,
+          productName,
+          cost,
+          calories,
+          consumedAt: consumedAt.getTime(),
+        });
+
+        setData(currentData);
+        handleClear();
+        setLoading(false);
+      })
+      .catch((error) => setError(error));
   };
 
   const handleEdit = () => {
