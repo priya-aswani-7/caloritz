@@ -28,6 +28,20 @@ export const getFoodEntries = async () => {
     .catch((error) => error);
 };
 
+export const getFoodEntriesByUserId = async (userId) => {
+  return fetch(`${BASE_URL}/user/${userId}/foodentry`, {
+    mode: "cors",
+    method: "get",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => data.data)
+    .catch((error) => error);
+};
+
 export const createFoodEntry = async (foodEntry) => {
   return fetch(`${BASE_URL}/foodentry`, {
     mode: "cors",
