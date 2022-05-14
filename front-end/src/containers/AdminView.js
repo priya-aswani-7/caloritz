@@ -12,7 +12,7 @@ import { getFoodEntries, getUsers } from "../services/api";
 
 export const AdminView = () => {
   const [data, setData] = useState(null);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(null);
   const [open, setOpen] = useState(false);
   const [editModeIndex, setEditModeIndex] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -35,8 +35,8 @@ export const AdminView = () => {
   }, []);
 
   useEffect(() => {
-    data !== null && setLoading(false);
-  }, [data]);
+    data !== null && users !== null && setLoading(false);
+  }, [data, users]);
 
   const handleClickOpen = () => {
     setOpen(true);
