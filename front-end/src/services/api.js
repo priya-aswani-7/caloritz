@@ -10,6 +10,9 @@ export const getFoodEntries = async (setFoodEntries, setError) => {
     },
   })
     .then((response) => response.json())
-    .then((data) => setFoodEntries(data.data))
+    .then((data) => {
+      setFoodEntries(data.data);
+      setError(null);
+    })
     .catch((error) => setError(error));
 };
