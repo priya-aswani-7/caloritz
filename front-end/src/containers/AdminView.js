@@ -75,11 +75,13 @@ export const AdminView = () => {
                   handleClickOpen={handleClickOpen}
                   handleClose={handleClose}
                   editModeIndex={editModeIndex}
+                  setError={setError}
                 />
                 <GlobalFoodEntryList
                   data={data}
                   setData={setData}
                   handleEdit={handleEdit}
+                  setError={setError}
                 />
               </>
             )
