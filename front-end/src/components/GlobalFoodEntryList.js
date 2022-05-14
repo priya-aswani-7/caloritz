@@ -12,10 +12,13 @@ import { deleteFoodEntry } from "../services/api";
 import { GlobalFoodEntry } from "./";
 import { LoadingSpinner } from "./LoadingSpinner";
 
-export const GlobalFoodEntryList = ({ data, setData, handleEdit }) => {
+export const GlobalFoodEntryList = ({
+  data,
+  setData,
+  handleEdit,
+  setError,
+}) => {
   const [loading, setLoading] = useState(null);
-  const [error, setError] = useState(null);
-
   const handleDelete = (deleteIndex) => {
     setLoading(true);
     deleteFoodEntry(data[deleteIndex]?._id)
