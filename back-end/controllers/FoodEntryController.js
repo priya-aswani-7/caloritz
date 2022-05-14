@@ -36,4 +36,12 @@ module.exports = {
         .catch((error) => reject(error));
     });
   },
+
+  delete: (id) => {
+    return new Promise((resolve, reject) => {
+      FoodEntry.findByIdAndDelete(id)
+        .then(() => resolve(id))
+        .catch((error) => reject(error));
+    });
+  },
 };
