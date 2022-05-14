@@ -1,7 +1,7 @@
 const BASE_URL = "http://localhost:8080";
 
-export const getFoodEntries = async () => {
-  return fetch(`${BASE_URL}/foodentry`, {
+export const getUsers = async () => {
+  return fetch(`${BASE_URL}/user?type=user`, {
     mode: "cors",
     method: "get",
     headers: {
@@ -14,8 +14,8 @@ export const getFoodEntries = async () => {
     .catch((error) => error);
 };
 
-export const getUsers = async () => {
-  return fetch(`${BASE_URL}/user?type=user`, {
+export const getFoodEntries = async () => {
+  return fetch(`${BASE_URL}/foodentry`, {
     mode: "cors",
     method: "get",
     headers: {
@@ -62,6 +62,20 @@ export const deleteFoodEntry = async (foodEntryId) => {
   return fetch(`${BASE_URL}/foodentry/${foodEntryId}`, {
     mode: "cors",
     method: "delete",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => data.data)
+    .catch((error) => error);
+};
+
+export const getStatistics = async () => {
+  return fetch(`${BASE_URL}/statistic`, {
+    mode: "cors",
+    method: "get",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
