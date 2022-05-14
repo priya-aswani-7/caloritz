@@ -19,28 +19,40 @@ export const StatisticCalorieList = ({ calorieStatistics }) => {
         Average calorie consumption of users for the last week
       </Typography>
 
-      <TableContainer>
-        <Box sx={{ maxWidth: 600, px: 5, mx: "auto" }}>
-          <Table size="small" aria-label="purchases" sx={{ mb: 2 }}>
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Index</TableCell>
-                <TableCell align="center">User Name</TableCell>
-                <TableCell align="center">Average calories</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {calorieStatistics.map((statistic, index) => (
-                <StatisticCalorieEntry
-                  key={index.toString()}
-                  index={index}
-                  {...statistic}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </Box>
-      </TableContainer>
+      {calorieStatistics?.length > 0 ? (
+        <TableContainer>
+          <Box sx={{ maxWidth: 600, px: 5, mx: "auto" }}>
+            <Table size="small" aria-label="purchases" sx={{ mb: 2 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">Index</TableCell>
+                  <TableCell align="center">User Name</TableCell>
+                  <TableCell align="center">Average calories</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {calorieStatistics?.map((statistic, index) => (
+                  <StatisticCalorieEntry
+                    key={index.toString()}
+                    index={index}
+                    {...statistic}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
+        </TableContainer>
+      ) : (
+        calorieStatistics?.length === 0 && (
+          <Typography
+            sx={{ textAlign: "center", fontWeight: 100 }}
+            color="text.secondary"
+          >
+            There are no current users to show average consumption for. Create
+            one or more users first :)
+          </Typography>
+        )
+      )}
     </Box>
   );
 };
