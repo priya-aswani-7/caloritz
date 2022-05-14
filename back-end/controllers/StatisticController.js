@@ -62,7 +62,7 @@ module.exports = {
       let calorieStatisticsData = [];
       let index = 0;
 
-      users.map((user) => {
+      users?.map((user) => {
         let bool = calorieData[index]?._id?.name === user.name;
         console.log(calorieData[index]?._id?.name, user.name);
         calorieStatisticsData.push({
