@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FoodEntryInput, GlobalFoodEntryList, NavBar } from "../components";
-import { globalFoodEntriesData, usersData } from "../constants";
+import { usersData } from "../constants";
 import { Route, Routes } from "react-router-dom";
 import { Statistics } from "../components/Statistics";
+import { getFoodEntries } from "../services/api";
 
 export const AdminView = () => {
-  const [data, setData] = useState(globalFoodEntriesData);
+  const [data, setData] = useState([]);
   const [users, setUsers] = useState(usersData);
   const [open, setOpen] = useState(false);
   const [editModeIndex, setEditModeIndex] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    getFoodEntries(setData, setError);
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
