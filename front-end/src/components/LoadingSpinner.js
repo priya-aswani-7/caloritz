@@ -7,6 +7,13 @@ export const LoadingSpinner = () => {
       sx={{
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: "100vh",
+        position: "absolute",
       }}
     >
       <CircularProgress size="3rem" />
