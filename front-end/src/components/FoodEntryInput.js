@@ -27,6 +27,7 @@ export const FoodEntryInput = ({
   handleClickOpen,
   handleClose,
   editModeIndex,
+  setError,
 }) => {
   const [selectedUserIndex, setSelectedUserIndex] = useState(null);
   const [productName, setProductName] = useState(null);
@@ -35,7 +36,6 @@ export const FoodEntryInput = ({
   const [consumedAt, setConsumedAt] = useState(null);
   const [datePickerOpened, setDatePickerOpened] = useState(null);
   const [loading, setLoading] = useState(null);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (editModeIndex !== null) {
