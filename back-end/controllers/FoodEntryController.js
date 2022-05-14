@@ -23,7 +23,6 @@ module.exports = {
   },
 
   getByUserId: (id) => {
-    console.log(id);
     return new Promise((resolve, reject) => {
       FoodEntry.find({ user: id })
         .sort("consumedAt")
@@ -62,7 +61,13 @@ module.exports = {
 
           resolve(result);
         })
-        .catch((error) => reject(error));
+        .catch((error) =>
+          reject(
+            error.message.includes("Cast to ObjectId failed")
+              ? new Error(`User with ID ${id} does not exist.`)
+              : error
+          )
+        );
     });
   },
 
@@ -78,7 +83,13 @@ module.exports = {
     return new Promise((resolve, reject) => {
       FoodEntry.findByIdAndUpdate(id, params, { new: true })
         .then((data) => resolve(data))
-        .catch((error) => reject(error));
+        .catch((error) =>
+          reject(
+            error.message.includes("Cast to ObjectId failed")
+              ? new Error(`Food entry with ID ${id} does not exist.`)
+              : error
+          )
+        );
     });
   },
 
@@ -86,7 +97,13 @@ module.exports = {
     return new Promise((resolve, reject) => {
       FoodEntry.findByIdAndDelete(id)
         .then(() => resolve(id))
-        .catch((error) => reject(error));
+        .catch((error) =>
+          reject(
+            error.message.includes("Cast to ObjectId failed")
+              ? new Error(`Food entry with ID ${id} does not exist.`)
+              : error
+          )
+        );
     });
   },
 };
