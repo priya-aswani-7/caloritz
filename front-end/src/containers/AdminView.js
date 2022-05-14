@@ -6,21 +6,32 @@ import {
   LoadingSpinner,
   NavBar,
 } from "../components";
-import { usersData } from "../constants";
 import { Route, Routes } from "react-router-dom";
 import { Statistics } from "../components/Statistics";
-import { getFoodEntries } from "../services/api";
+import { getFoodEntries, getUsers } from "../services/api";
 
 export const AdminView = () => {
   const [data, setData] = useState(null);
-  const [users, setUsers] = useState(usersData);
+  const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const [editModeIndex, setEditModeIndex] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    getFoodEntries(setData, setError);
+    getFoodEntries()
+      .then((data) => {
+        setData(data);
+        setError(error ?? null);
+      })
+      .catch((error) => setError(error));
+
+    getUsers()
+      .then((data) => {
+        setUsers(data);
+        setError(error ?? null);
+      })
+      .catch((error) => setError(error));
   }, []);
 
   useEffect(() => {
@@ -44,7 +55,6 @@ export const AdminView = () => {
   return (
     <>
       <NavBar isAdmin={true} />
-
       <Routes>
         <Route path="/statistics" exact element={<Statistics />}></Route>
         <Route
