@@ -63,10 +63,9 @@ export const AdminView = () => {
           element={
             error ? (
               <ErrorAlert />
-            ) : loading ? (
-              <LoadingSpinner />
             ) : (
               <>
+                {loading && <LoadingSpinner />}
                 <FoodEntryInput
                   data={data}
                   setData={setData}
