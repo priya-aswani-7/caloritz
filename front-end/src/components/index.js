@@ -1,3 +1,4 @@
+export { ErrorAlert } from "./ErrorAlert";
 export { Filter } from "./Filter";
 export { FoodEntry } from "./FoodEntry";
 export { FoodEntryInput } from "./FoodEntryInput";
