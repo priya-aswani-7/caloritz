@@ -1,6 +1,7 @@
 const express = require("express");
 const controllers = require("../controllers");
 const FoodEntryController = require("../controllers/FoodEntryController");
+const StatisticController = require("../controllers/StatisticController");
 const UserController = require("../controllers/UserController");
 const router = express.Router();
 
@@ -12,7 +13,7 @@ router.get("/:resource", (req, res) => {
   if (!controller) {
     return res.json({
       confirmation: "Fail",
-      message: "Invalid request. Resource undefined.",
+      message: "Invalid request.",
     });
   }
 
@@ -37,7 +38,10 @@ router.get("/:resource/:id", (req, res) => {
   const id = req.params.id;
   const controller = controllers[resource];
 
-  if (!controller || controller === FoodEntryController) {
+  if (
+    !controller ||
+    [FoodEntryController, StatisticController].includes(controller)
+  ) {
     return res.json({
       confirmation: "Fail",
       message: "Invalid request.",
@@ -83,7 +87,10 @@ router.post("/:resource", (req, res) => {
   const data = req.body;
   const controller = controllers[resource];
 
-  if (!controller || controller === UserController) {
+  if (
+    !controller ||
+    [UserController, StatisticController].includes(controller)
+  ) {
     return res.json({
       confirmation: "Fail",
       message: "Invalid request.",
@@ -112,7 +119,10 @@ router.put("/:resource/:id", (req, res) => {
   const data = req.body;
   const controller = controllers[resource];
 
-  if (!controller || controller === UserController) {
+  if (
+    !controller ||
+    [UserController, StatisticController].includes(controller)
+  ) {
     return res.json({
       confirmation: "Fail",
       message: "Invalid request.",
@@ -140,7 +150,10 @@ router.delete("/:resource/:id", (req, res) => {
   const id = req.params.id;
   const controller = controllers[resource];
 
-  if (!controller || controller === UserController) {
+  if (
+    !controller ||
+    [UserController, StatisticController].includes(controller)
+  ) {
     return res.json({
       confirmation: "Fail",
       message: "Invalid request.",
