@@ -14,6 +14,9 @@ export const LoadingSpinner = () => {
         right: 0,
         height: "100vh",
         position: "absolute",
+        backgroundColor: "black",
+        opacity: 0.6,
+        zIndex: 10,
       }}
     >
       <CircularProgress size="3rem" />
