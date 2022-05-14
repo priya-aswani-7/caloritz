@@ -1,4 +1,5 @@
 const { FoodEntry } = require("../models");
+const { getMonthYearTimestamp } = require("../utils/helpers");
 
 module.exports = {
   get: (params) => {
@@ -16,6 +17,50 @@ module.exports = {
           });
 
           resolve(data);
+        })
+        .catch((error) => reject(error));
+    });
+  },
+
+  getByUserId: (id) => {
+    console.log(id);
+    return new Promise((resolve, reject) => {
+      FoodEntry.find({ user: id })
+        .sort("consumedAt")
+        .lean()
+        .then((data) => {
+          console.log(data);
+          let result = [];
+
+          let currentTimestamp =
+            data.length > 0 ? getMonthYearTimestamp(data[0].consumedAt) : null;
+          let currentMonthYear = {
+            monthYear: currentTimestamp,
+            foodEntries: data.length > 0 ? [data[0]] : [],
+          };
+          for (let i = 1; i < data.length; i++) {
+            if (
+              getMonthYearTimestamp(data[i].consumedAt) === currentTimestamp
+            ) {
+              currentMonthYear.foodEntries.push(data[i]);
+            } else {
+              result.push(currentMonthYear);
+              currentTimestamp = getMonthYearTimestamp(data[i].consumedAt);
+              currentMonthYear = {
+                monthYear: currentTimestamp,
+                foodEntries: [data[i]],
+              };
+            }
+          }
+          if (
+            (result.length > 0 &&
+              result[result.length - 1].monthYear !== currentTimestamp) ||
+            (result.length === 0 && currentMonthYear.foodEntries.length !== 0)
+          ) {
+            result.push(currentMonthYear);
+          }
+
+          resolve(result);
         })
         .catch((error) => reject(error));
     });
