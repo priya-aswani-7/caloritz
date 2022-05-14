@@ -15,6 +15,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { cloneDeep } from "lodash";
 import { getInsertPosition } from "../utils/helpers";
+import { editFoodEntry } from "../services/api";
 
 export const FoodEntryInput = ({
   data,
@@ -32,12 +33,14 @@ export const FoodEntryInput = ({
   const [calories, setCalories] = useState(null);
   const [consumedAt, setConsumedAt] = useState(null);
   const [datePickerOpened, setDatePickerOpened] = useState(null);
+  const [loading, setLoading] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (editModeIndex !== null) {
       let userIndex;
       for (let i = 0; i < users?.length; i++) {
-        if (users[i].id === data[editModeIndex]?.userId) {
+        if (users[i]._id === data[editModeIndex]?.userId) {
           userIndex = i;
           break;
         }
@@ -119,7 +122,7 @@ export const FoodEntryInput = ({
     let currentData = data ? cloneDeep(data) : [];
     currentData.splice(insertPosition, 0, {
       userName: users[selectedUserIndex]?.name,
-      userId: users[selectedUserIndex]?.id,
+      userId: users[selectedUserIndex]?._id,
       productName,
       cost,
       calories,
@@ -131,38 +134,49 @@ export const FoodEntryInput = ({
   };
 
   const handleEdit = () => {
-    let currentData = data ? cloneDeep(data) : [];
+    setLoading(true);
+    editFoodEntry(data[editModeIndex]?._id, {
+      user: users[selectedUserIndex]?._id,
+      productName,
+      cost,
+      calories,
+      consumedAt: consumedAt.getTime(),
+    })
+      .then(() => {
+        setError(null);
+        let currentData = data ? cloneDeep(data) : [];
+        if (consumedAt.getTime() === data[editModeIndex].consumedAt) {
+          currentData[editModeIndex] = {
+            userName: users[selectedUserIndex]?.name,
+            userId: users[selectedUserIndex]?._id,
+            productName,
+            cost,
+            calories,
+            consumedAt: consumedAt.getTime(),
+          };
+        } else {
+          let insertPosition = getInsertPosition(
+            data,
+            "consumedAt",
+            consumedAt.getTime()
+          );
 
-    if (consumedAt.getTime() === data[editModeIndex].consumedAt) {
-      currentData[editModeIndex] = {
-        userName: users[selectedUserIndex]?.name,
-        userId: users[selectedUserIndex]?.id,
-        productName,
-        cost,
-        calories,
-        consumedAt: consumedAt.getTime(),
-      };
-    } else {
-      let insertPosition = getInsertPosition(
-        data,
-        "consumedAt",
-        consumedAt.getTime()
-      );
+          currentData.splice(editModeIndex, 1);
+          currentData.splice(Math.max(insertPosition - 1, 0), 0, {
+            userName: users[selectedUserIndex]?.name,
+            userId: users[selectedUserIndex]?._id,
+            productName,
+            cost,
+            calories,
+            consumedAt: consumedAt.getTime(),
+          });
+        }
 
-      currentData.splice(insertPosition, 0, {
-        userName: users[selectedUserIndex]?.name,
-        userId: users[selectedUserIndex]?.id,
-        productName,
-        cost,
-        calories,
-        consumedAt: consumedAt.getTime(),
-      });
-      currentData.splice(editModeIndex + 1, 1);
-    }
-
-    setData(currentData);
-
-    handleClear();
+        setData(currentData);
+        handleClear();
+        setLoading(false);
+      })
+      .catch((error) => setError(error));
   };
 
   return (
@@ -198,7 +212,7 @@ export const FoodEntryInput = ({
                     }
                     label="User"
                   >
-                    {users.map((user, index) => (
+                    {users?.map((user, index) => (
                       <MenuItem key={index.toString()} value={index}>
                         {user.name}
                       </MenuItem>
