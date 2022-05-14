@@ -1,14 +1,9 @@
-import { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { StatisticCard } from ".";
 import { getDateMonthYearString } from "../utils/helpers";
-import { foodEntryStatisticsData } from "../constants";
 
-export const StatisticCardSet = () => {
-  const [foodEntryStatistics, setFoodEntryStatistics] = useState(
-    foodEntryStatisticsData
-  );
+export const StatisticCardSet = ({ foodEntryStatistics }) => {
   const nowString = getDateMonthYearString(new Date().getTime());
 
   return (
