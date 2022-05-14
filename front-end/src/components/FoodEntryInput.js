@@ -135,6 +135,19 @@ export const FoodEntryInput = ({
 
   const handleEdit = () => {
     handleClose();
+    let editItem = data[editModeIndex];
+
+    if (
+      editItem.userId === users[selectedUserIndex]?._id &&
+      editItem.productName === productName &&
+      editItem.cost === cost &&
+      editItem.calories === calories &&
+      editItem.consumedAt === consumedAt.getTime()
+    ) {
+      console.log("no updates thanks");
+      return;
+    }
+
     setLoading(true);
     editFoodEntry(data[editModeIndex]?._id, {
       user: users[selectedUserIndex]?._id,
