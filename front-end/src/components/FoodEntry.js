@@ -94,7 +94,7 @@ export const FoodEntry = ({
                   <TableRow>
                     <TableCell>Index</TableCell>
                     <TableCell>Product Name</TableCell>
-                    <TableCell>Cost</TableCell>
+                    <TableCell>Cost ($)</TableCell>
                     <TableCell>Calories</TableCell>
                     <TableCell>Consumed At</TableCell>
                     <TableCell />
