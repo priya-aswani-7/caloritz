@@ -28,4 +28,12 @@ module.exports = {
         .catch((error) => reject(error));
     });
   },
+
+  put: (id, params) => {
+    return new Promise((resolve, reject) => {
+      FoodEntry.findByIdAndUpdate(id, params, { new: true })
+        .then((data) => resolve(data))
+        .catch((error) => reject(error));
+    });
+  },
 };
