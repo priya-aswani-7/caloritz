@@ -16,33 +16,35 @@ export const GlobalFoodEntryList = ({ data, setData, handleEdit }) => {
   };
 
   return (
-    <TableContainer>
-      <Box sx={{ maxWidth: 925, px: 5, mx: "auto" }}>
-        <Table size="small" aria-label="purchases" sx={{ mb: 2 }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Index</TableCell>
-              <TableCell>User Name</TableCell>
-              <TableCell>Product Name</TableCell>
-              <TableCell>Cost ($)</TableCell>
-              <TableCell>Calories</TableCell>
-              <TableCell>Consumed At</TableCell>
-              <TableCell />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((foodEntry, index) => (
-              <GlobalFoodEntry
-                key={index.toString()}
-                index={index}
-                {...foodEntry}
-                handleDelete={handleDelete}
-                handleEdit={handleEdit}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </Box>
-    </TableContainer>
+    data?.length > 0 && (
+      <TableContainer>
+        <Box sx={{ maxWidth: 925, px: 5, mx: "auto" }}>
+          <Table size="small" aria-label="purchases" sx={{ mb: 2 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Index</TableCell>
+                <TableCell>User Name</TableCell>
+                <TableCell>Product Name</TableCell>
+                <TableCell>Cost ($)</TableCell>
+                <TableCell>Calories</TableCell>
+                <TableCell>Consumed At</TableCell>
+                <TableCell />
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map((foodEntry, index) => (
+                <GlobalFoodEntry
+                  key={index.toString()}
+                  index={index}
+                  {...foodEntry}
+                  handleDelete={handleDelete}
+                  handleEdit={handleEdit}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </Box>
+      </TableContainer>
+    )
   );
 };
