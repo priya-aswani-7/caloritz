@@ -11,13 +11,20 @@ module.exports = {
           data = data.map((datum) => {
             datum.userId = datum.user._id;
             datum.userName = datum.user.name;
-            delete datum.user._id;
-            delete datum.user.name;
+            delete datum.user;
             return datum;
           });
 
           resolve(data);
         })
+        .catch((error) => reject(error));
+    });
+  },
+
+  post: (params) => {
+    return new Promise((resolve, reject) => {
+      FoodEntry.create(params)
+        .then((data) => resolve(data))
         .catch((error) => reject(error));
     });
   },
