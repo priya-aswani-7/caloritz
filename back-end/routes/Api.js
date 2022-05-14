@@ -87,4 +87,33 @@ router.post("/:resource", (req, res) => {
     });
 });
 
+router.put("/:resource/:id", (req, res) => {
+  const resource = req.params.resource;
+  const id = req.params.id;
+  const data = req.body;
+  const controller = controllers[resource];
+
+  if (!controller || controller === UserController) {
+    return res.json({
+      confirmation: "Fail",
+      message: "Invalid request.",
+    });
+  }
+
+  controller
+    .put(id, data)
+    .then((data) => {
+      res.json({
+        confirmation: "success",
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.json({
+        confirmation: "fail",
+        error: error.message,
+      });
+    });
+});
+
 module.exports = router;
