@@ -6,7 +6,7 @@ import { Statistics } from "../components/Statistics";
 import { getFoodEntries } from "../services/api";
 
 export const AdminView = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [users, setUsers] = useState(usersData);
   const [open, setOpen] = useState(false);
   const [editModeIndex, setEditModeIndex] = useState(null);
