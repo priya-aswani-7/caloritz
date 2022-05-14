@@ -38,6 +38,7 @@ export const UserView = () => {
         <>
           {loading && <LoadingSpinner />}
           <FoodEntryInput
+            userId={userId}
             data={data}
             setData={setData}
             isAdmin={false}
