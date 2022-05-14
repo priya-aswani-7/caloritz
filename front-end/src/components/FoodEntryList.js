@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,7 +17,7 @@ export const FoodEntryList = ({
   setFilterStartDate,
   setFilterEndDate,
 }) => {
-  return (
+  return data?.length > 0 ? (
     <TableContainer>
       <Box sx={{ maxWidth: 875, px: 5, mx: "auto" }}>
         <Table aria-label="collapsible table" size="small">
@@ -46,5 +47,14 @@ export const FoodEntryList = ({
         </Table>
       </Box>
     </TableContainer>
+  ) : (
+    (data === undefined || data?.length === 0) && (
+      <Typography
+        sx={{ textAlign: "center", fontWeight: 100 }}
+        color="text.secondary"
+      >
+        There are no current food entries. Tap above to create one :)
+      </Typography>
+    )
   );
 };
