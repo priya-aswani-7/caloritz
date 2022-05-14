@@ -1,5 +1,6 @@
 const express = require("express");
 const controllers = require("../controllers");
+const UserController = require("../controllers/UserController");
 const router = express.Router();
 
 router.get("/:resource", (req, res) => {
@@ -38,12 +39,40 @@ router.get("/:resource/:id", (req, res) => {
   if (!controller) {
     return res.json({
       confirmation: "Fail",
-      message: "Invalid request. Resource undefined.",
+      message: "Invalid request.",
     });
   }
 
   controller
     .getById(id)
+    .then((data) => {
+      res.json({
+        confirmation: "success",
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.json({
+        confirmation: "fail",
+        error: error.message,
+      });
+    });
+});
+
+router.post("/:resource", (req, res) => {
+  const resource = req.params.resource;
+  const data = req.body;
+  const controller = controllers[resource];
+
+  if (!controller || controller === UserController) {
+    return res.json({
+      confirmation: "Fail",
+      message: "Invalid request.",
+    });
+  }
+
+  controller
+    .post(data)
     .then((data) => {
       res.json({
         confirmation: "success",
