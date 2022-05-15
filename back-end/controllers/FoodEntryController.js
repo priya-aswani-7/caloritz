@@ -22,9 +22,13 @@ module.exports = {
     });
   },
 
-  getByUserId: (id) => {
+  getByUserId: (id, startDate, endDate) => {
     return new Promise((resolve, reject) => {
-      FoodEntry.find({ user: id })
+      FoodEntry.find({
+        user: id,
+        consumedAt: { $gte: startDate },
+        consumedAt: { $lte: endDate },
+      })
         .sort("consumedAt")
         .lean()
         .then((data) => {
