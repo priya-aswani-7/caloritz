@@ -34,7 +34,7 @@ module.exports = {
       }
 
       let { password } = params;
-      if (password.length === 0) throw new Error("User password is required.");
+      if (!password) throw new Error("User password is required.");
       if (password.length < 8)
         throw new Error("User password must be minimum 8 characters.");
       if (password.length > 128)
