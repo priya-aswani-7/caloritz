@@ -81,10 +81,13 @@ export const Filter = ({
                         startDate > new Date() ||
                         (endDate &&
                           getDateFromTimestamp(startDate) >
-                            getDateFromTimestamp(endDate))
+                            getDateFromTimestamp(endDate)) ||
+                        isNaN(startDate)
                       }
                       helperText={
-                        startDate > new Date()
+                        isNaN(startDate)
+                          ? "Start Date needs to be a date"
+                          : startDate > new Date()
                           ? "Start Date cannot be in the future"
                           : endDate &&
                             getDateFromTimestamp(startDate) >
@@ -122,10 +125,13 @@ export const Filter = ({
                         (startDate &&
                           endDate &&
                           getDateFromTimestamp(endDate) <
-                            getDateFromTimestamp(startDate))
+                            getDateFromTimestamp(startDate)) ||
+                        isNaN(endDate)
                       }
                       helperText={
-                        endDate > new Date()
+                        isNaN(endDate)
+                          ? "End Date needs to be a date"
+                          : endDate > new Date()
                           ? "End Date cannot be in the future"
                           : startDate &&
                             endDate &&
@@ -160,10 +166,13 @@ export const Filter = ({
               (endDate &&
                 getDateFromTimestamp(startDate) >
                   getDateFromTimestamp(endDate)) ||
+              isNaN(startDate) ||
               endDate > new Date() ||
               (startDate &&
                 endDate &&
-                getDateFromTimestamp(endDate) < getDateFromTimestamp(startDate))
+                getDateFromTimestamp(endDate) <
+                  getDateFromTimestamp(startDate)) ||
+              isNaN(endDate)
             }
           >
             Apply Filter
