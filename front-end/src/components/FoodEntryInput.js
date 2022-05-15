@@ -369,7 +369,7 @@ export const FoodEntryInput = ({
                   label="Consumed At"
                   value={consumedAt}
                   onChange={(value) => setConsumedAt(value)}
-                  onClose={() => !consumedAt && setDatePickerOpened(true)}
+                  onClose={() => setDatePickerOpened(true)}
                   maxDateTime={new Date()}
                 />
               </LocalizationProvider>
