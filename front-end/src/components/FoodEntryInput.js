@@ -31,6 +31,7 @@ export const FoodEntryInput = ({
   filterEndDate,
   setError,
   setLoading,
+  setSuccess,
 }) => {
   const [selectedUserIndex, setSelectedUserIndex] = useState(null);
   const [productName, setProductName] = useState(null);
@@ -174,6 +175,7 @@ export const FoodEntryInput = ({
         setData(currentData);
         handleClear();
         setLoading(false);
+        setSuccess("Food entry added successfully");
       })
       .catch((error) => setError(error));
   };
