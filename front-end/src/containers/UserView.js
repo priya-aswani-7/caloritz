@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   NavBar,
   FoodEntryList,
@@ -6,11 +6,13 @@ import {
   ErrorAlert,
   LoadingSpinner,
 } from "../components";
+import { AuthContext } from "../context/AuthContext";
 import { getFoodEntriesByUserId } from "../services/api";
 import { getDateFromTimestamp } from "../utils/helpers";
 
 export const UserView = () => {
-  const [userId, setUserId] = useState("627eb18aaf86485f3310d00e");
+  const authContext = useContext(AuthContext);
+  const { userId } = authContext;
   const [data, setData] = useState(null);
   const [monthlyBudget, setMonthlyBudget] = useState(1000);
   const [dailyCalorieLimit, setDailyCalorieLimit] = useState(2100);
