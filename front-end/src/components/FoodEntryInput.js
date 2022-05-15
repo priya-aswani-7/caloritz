@@ -351,12 +351,15 @@ export const FoodEntryInput = ({
                       error={
                         (datePickerOpened &&
                           (consumedAt === null || consumedAt === "")) ||
+                        isNaN(consumedAt) ||
                         consumedAt > new Date()
                       }
                       helperText={
                         datePickerOpened &&
                         (consumedAt === null || consumedAt === "")
                           ? "Product consumption timestamp is required"
+                          : isNaN(consumedAt)
+                          ? "Product consumption must be a timestamp"
                           : consumedAt > new Date()
                           ? "Product consumption timestamp cannot be in the future"
                           : null
@@ -399,6 +402,7 @@ export const FoodEntryInput = ({
               calories <= 0 ||
               (datePickerOpened &&
                 (consumedAt === null || consumedAt === "")) ||
+              isNaN(consumedAt) ||
               consumedAt > new Date()
             }
           >
