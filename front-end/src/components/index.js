@@ -13,3 +13,4 @@ export { StatisticCalorieList } from "./StatisticCalorieList";
 export { StatisticCard } from "./StatisticCard";
 export { StatisticCardSet } from "./StatisticCardSet";
 export { Statistics } from "./Statistics";
+export { SuccessAlert } from "./SuccessAlert";
