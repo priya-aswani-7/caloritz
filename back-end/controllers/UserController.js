@@ -34,13 +34,11 @@ module.exports = {
       }
 
       let { password } = params;
-      if (password.length === 0) {
-        throw new Error("User password is required.");
-      } else if (password.length < 8) {
+      if (password.length === 0) throw new Error("User password is required.");
+      if (password.length < 8)
         throw new Error("User password must be minimum 8 characters.");
-      } else if (password.length > 128) {
+      if (password.length > 128)
         throw new Error("User password must be at most 128 characters.");
-      }
 
       password = await bcrypt.hash(password, 10);
       const user = await User.create({ ...params, password });
@@ -54,6 +52,35 @@ module.exports = {
 
       const data = { ...user._doc, token };
       return data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  login: async (params) => {
+    try {
+      const { email, password } = params;
+      if (!email) throw new Error("Email is required to login.");
+      if (!password) throw new Error("Password is required to login.");
+      if (password.length < 8)
+        throw new Error("Password length must be at least 8 characters.");
+      if (password.length > 128)
+        throw new Error("Password length must be at most 128 characters.");
+
+      const user = await User.findOne({ email });
+      if (user && (await bcrypt.compare(password, user.password))) {
+        const token = jwt.sign(
+          { userId: user._id, email, type: user.type },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "7d",
+          }
+        );
+
+        const data = { ...user._doc, token };
+        return data;
+      }
+      throw new Error("Invalid credentials.");
     } catch (error) {
       throw error;
     }
