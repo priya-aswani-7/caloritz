@@ -5,6 +5,7 @@ import {
   FoodEntryInput,
   ErrorAlert,
   LoadingSpinner,
+  SuccessAlert,
 } from "../components";
 import { AuthContext } from "../context/AuthContext";
 import { getFoodEntriesByUserId } from "../services/api";
@@ -20,6 +21,7 @@ export const UserView = () => {
   const [filterEndDate, setFilterEndDate] = useState(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -51,6 +53,7 @@ export const UserView = () => {
         <ErrorAlert />
       ) : (
         <>
+          <SuccessAlert success={success} setSuccess={setSuccess} />
           {loading && <LoadingSpinner />}
           <FoodEntryInput
             userId={userId}
@@ -65,6 +68,7 @@ export const UserView = () => {
             filterEndDate={filterEndDate}
             setError={setError}
             setLoading={setLoading}
+            setSuccess={setSuccess}
           />
           <FoodEntryList
             data={data}
