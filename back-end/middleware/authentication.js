@@ -6,7 +6,7 @@ const authentication = (req, res, next) => {
   if (!token) {
     return res.status(403).json({
       confirmation: "fail",
-      message:
+      error:
         "Unauthorized request. A token is required to authenticate your access.",
     });
   }
@@ -17,7 +17,7 @@ const authentication = (req, res, next) => {
   } catch (err) {
     return res.status(401).json({
       confirmation: "fail",
-      message: "Invalid token.",
+      error: "Invalid token.",
     });
   }
 
