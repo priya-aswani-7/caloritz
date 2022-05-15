@@ -189,7 +189,6 @@ export const FoodEntryInput = ({
       editItem.calories === calories &&
       editItem.consumedAt === consumedAt.getTime()
     ) {
-      console.log("no updates thanks");
       return;
     }
 
