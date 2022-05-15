@@ -84,6 +84,24 @@ router.get("/user/:id/foodentry", (req, res) => {
     });
 });
 
+router.post("/login", (req, res) => {
+  const data = req.body;
+
+  UserController.login(data)
+    .then((data) => {
+      res.json({
+        confirmation: "success",
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.json({
+        confirmation: "fail",
+        error: error.message,
+      });
+    });
+});
+
 router.post("/:resource", (req, res) => {
   const resource = req.params.resource;
   const data = req.body;
