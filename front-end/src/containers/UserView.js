@@ -24,15 +24,13 @@ export const UserView = () => {
     let startDate =
       filterStartDate && getDateFromTimestamp(filterStartDate?.getTime());
     let endDate =
-      filterEndDate && getDateFromTimestamp(filterEndDate?.getTime());
+      filterEndDate &&
+      getDateFromTimestamp(filterEndDate?.getTime()) + 24 * 3600 * 1000 - 1;
     getFoodEntriesByUserId(
       userId,
       startDate || 0,
-      endDate && startDate
-        ? endDate === startDate
-          ? endDate + 24 * 3600 * 1000 - 1
-          : endDate
-        : getDateFromTimestamp(new Date().getTime())
+      endDate ||
+        getDateFromTimestamp(new Date().getTime()) + 24 * 3600 * 1000 - 1
     )
       .then((data) => {
         setError(null);
@@ -59,6 +57,8 @@ export const UserView = () => {
             handleClickOpen={() => setOpen(true)}
             handleClose={() => setOpen(false)}
             editModeIndex={null}
+            filterStartDate={filterStartDate}
+            filterEndDate={filterEndDate}
             setError={setError}
             setLoading={setLoading}
           />
