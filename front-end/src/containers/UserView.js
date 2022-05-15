@@ -7,6 +7,7 @@ import {
   LoadingSpinner,
 } from "../components";
 import { getFoodEntriesByUserId } from "../services/api";
+import { getDateFromTimestamp } from "../utils/helpers";
 
 export const UserView = () => {
   const [userId, setUserId] = useState("627eb18aaf86485f3310d00e");
@@ -20,14 +21,20 @@ export const UserView = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    getFoodEntriesByUserId(userId)
+    getFoodEntriesByUserId(
+      userId,
+      filterStartDate ? getDateFromTimestamp(filterStartDate?.getTime()) : 0,
+      filterEndDate
+        ? getDateFromTimestamp(filterEndDate?.getTime())
+        : getDateFromTimestamp(new Date())
+    )
       .then((data) => {
         setError(null);
         setData(data);
         setLoading(false);
       })
       .catch((error) => setError(error));
-  }, []);
+  }, [filterStartDate, filterEndDate]);
 
   return (
     <>
