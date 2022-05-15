@@ -23,24 +23,26 @@ export const UserView = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    let startDate =
-      filterStartDate && getDateFromTimestamp(filterStartDate?.getTime());
-    let endDate =
-      filterEndDate &&
-      getDateFromTimestamp(filterEndDate?.getTime()) + 24 * 3600 * 1000 - 1;
-    getFoodEntriesByUserId(
-      userId,
-      startDate || 0,
-      endDate ||
-        getDateFromTimestamp(new Date().getTime()) + 24 * 3600 * 1000 - 1
-    )
-      .then((data) => {
-        setError(null);
-        setData(data);
-        setLoading(false);
-      })
-      .catch((error) => setError(error));
-  }, [filterStartDate, filterEndDate]);
+    if (userId) {
+      let startDate =
+        filterStartDate && getDateFromTimestamp(filterStartDate?.getTime());
+      let endDate =
+        filterEndDate &&
+        getDateFromTimestamp(filterEndDate?.getTime()) + 24 * 3600 * 1000 - 1;
+      getFoodEntriesByUserId(
+        userId,
+        startDate || 0,
+        endDate ||
+          getDateFromTimestamp(new Date().getTime()) + 24 * 3600 * 1000 - 1
+      )
+        .then((data) => {
+          setError(null);
+          setData(data);
+          setLoading(false);
+        })
+        .catch((error) => setError(error));
+    }
+  }, [userId, filterStartDate, filterEndDate]);
 
   return (
     <>
