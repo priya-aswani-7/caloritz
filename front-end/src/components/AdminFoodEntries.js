@@ -6,6 +6,7 @@ import {
   LoadingSpinner,
 } from ".";
 import { getFoodEntries, getUsers } from "../services/api";
+import { SuccessAlert } from "./SuccessAlert";
 
 export const AdminFoodEntries = () => {
   const [data, setData] = useState(null);
@@ -13,6 +14,7 @@ export const AdminFoodEntries = () => {
   const [open, setOpen] = useState(false);
   const [editModeIndex, setEditModeIndex] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -53,6 +55,7 @@ export const AdminFoodEntries = () => {
     <ErrorAlert />
   ) : (
     <>
+      <SuccessAlert success={success} setSuccess={setSuccess} />
       {loading && <LoadingSpinner />}
       <FoodEntryInput
         data={data}
@@ -65,6 +68,7 @@ export const AdminFoodEntries = () => {
         editModeIndex={editModeIndex}
         setError={setError}
         setLoading={setLoading}
+        setSuccess={setSuccess}
       />
       <GlobalFoodEntryList
         data={data}
@@ -72,6 +76,7 @@ export const AdminFoodEntries = () => {
         handleEdit={handleEdit}
         setError={setError}
         setLoading={setLoading}
+        setSuccess={setSuccess}
       />
     </>
   );
