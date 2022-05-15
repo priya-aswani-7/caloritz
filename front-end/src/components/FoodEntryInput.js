@@ -27,6 +27,8 @@ export const FoodEntryInput = ({
   handleClickOpen,
   handleClose,
   editModeIndex,
+  filterStartDate,
+  filterEndDate,
   setError,
   setLoading,
 }) => {
@@ -78,51 +80,62 @@ export const FoodEntryInput = ({
     })
       .then((result) => {
         setError(null);
-        let currentData = data ? cloneDeep(data) : [];
+        if (
+          (!filterStartDate && !filterEndDate) ||
+          (consumedAt >= filterStartDate && consumedAt <= filterEndDate)
+        ) {
+          let currentData = data ? cloneDeep(data) : [];
 
-        const month = consumedAt.getMonth();
-        const year = consumedAt.getFullYear();
-        const monthYear = new Date(year, month).getTime();
+          const month = consumedAt.getMonth();
+          const year = consumedAt.getFullYear();
+          const monthYear = new Date(year, month).getTime();
 
-        let monthlyFoodEntryIndex = data ? -1 : 0;
-        let currentMonthlyFoodEntry = data.filter((monthlyFoodEntry, index) => {
-          if (monthlyFoodEntry.monthYear === monthYear) {
-            monthlyFoodEntryIndex = index;
-            return monthlyFoodEntry;
+          let monthlyFoodEntryIndex = data ? -1 : 0;
+          let currentMonthlyFoodEntry = data.filter(
+            (monthlyFoodEntry, index) => {
+              if (monthlyFoodEntry.monthYear === monthYear) {
+                monthlyFoodEntryIndex = index;
+                return monthlyFoodEntry;
+              }
+            }
+          )[0];
+
+          if (monthlyFoodEntryIndex === -1) {
+            let insertPosition = getInsertPosition(
+              data,
+              "monthYear",
+              monthYear
+            );
+
+            currentData.splice(insertPosition, 0, {
+              monthYear,
+              foodEntries: [
+                { _id: result._id, productName, cost, calories, consumedAt },
+              ],
+            });
+          } else {
+            let insertPosition = getInsertPosition(
+              currentMonthlyFoodEntry.foodEntries,
+              "consumedAt",
+              consumedAt.getTime()
+            );
+
+            currentMonthlyFoodEntry.foodEntries.splice(insertPosition, 0, {
+              _id: result._id,
+              productName,
+              cost,
+              calories,
+              consumedAt: consumedAt.getTime(),
+            });
+
+            currentMonthlyFoodEntry.foodEntries = [
+              ...currentMonthlyFoodEntry.foodEntries,
+            ];
+
+            currentData[monthlyFoodEntryIndex] = currentMonthlyFoodEntry;
           }
-        })[0];
-
-        if (monthlyFoodEntryIndex === -1) {
-          let insertPosition = getInsertPosition(data, "monthYear", monthYear);
-
-          currentData.splice(insertPosition, 0, {
-            monthYear,
-            foodEntries: [
-              { _id: result._id, productName, cost, calories, consumedAt },
-            ],
-          });
-        } else {
-          let insertPosition = getInsertPosition(
-            currentMonthlyFoodEntry.foodEntries,
-            "consumedAt",
-            consumedAt.getTime()
-          );
-
-          currentMonthlyFoodEntry.foodEntries.splice(insertPosition, 0, {
-            _id: result._id,
-            productName,
-            cost,
-            calories,
-            consumedAt: consumedAt.getTime(),
-          });
-
-          currentMonthlyFoodEntry.foodEntries = [
-            ...currentMonthlyFoodEntry.foodEntries,
-          ];
-
-          currentData[monthlyFoodEntryIndex] = currentMonthlyFoodEntry;
+          setData(currentData);
         }
-        setData(currentData);
         handleClear();
         setLoading(false);
       })
