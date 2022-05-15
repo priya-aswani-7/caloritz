@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,35 +17,55 @@ export const FoodEntryList = ({
   setFilterStartDate,
   setFilterEndDate,
 }) => {
-  return (
-    <TableContainer>
-      <Box sx={{ maxWidth: 875, px: 5, mx: "auto" }}>
-        <Table aria-label="collapsible table" size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>Month, Year</TableCell>
-              <TableCell align="right">
-                <Filter
-                  filterStartDate={filterStartDate}
-                  filterEndDate={filterEndDate}
-                  setFilterStartDate={setFilterStartDate}
-                  setFilterEndDate={setFilterEndDate}
+  return data?.length > 0 || (filterStartDate && filterEndDate) ? (
+    <>
+      <TableContainer>
+        <Box sx={{ maxWidth: 925, px: 5, mx: "auto" }}>
+          <Table aria-label="collapsible table" size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Month, Year</TableCell>
+                <TableCell align="right">
+                  <Filter
+                    filterStartDate={filterStartDate}
+                    filterEndDate={filterEndDate}
+                    setFilterStartDate={setFilterStartDate}
+                    setFilterEndDate={setFilterEndDate}
+                  />
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data?.map((monthlyFoodEntry, index) => (
+                <FoodEntry
+                  key={index.toString()}
+                  monthlyFoodEntry={monthlyFoodEntry}
+                  monthlyBudget={monthlyBudget}
+                  dailyCalorieLimit={dailyCalorieLimit}
                 />
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((monthlyFoodEntry, index) => (
-              <FoodEntry
-                key={index.toString()}
-                monthlyFoodEntry={monthlyFoodEntry}
-                monthlyBudget={monthlyBudget}
-                dailyCalorieLimit={dailyCalorieLimit}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </Box>
-    </TableContainer>
+              ))}
+            </TableBody>
+          </Table>
+        </Box>
+      </TableContainer>
+      {data?.length === 0 && (
+        <Typography
+          sx={{ textAlign: "center", fontWeight: 100, mt: 2 }}
+          color="text.secondary"
+        >
+          There don't seem to be any food entries in the selected range. Play
+          around with the range to see results :)
+        </Typography>
+      )}
+    </>
+  ) : (
+    (data === undefined || data?.length === 0) && (
+      <Typography
+        sx={{ textAlign: "center", fontWeight: 100 }}
+        color="text.secondary"
+      >
+        There are no current food entries. Tap above to create one :)
+      </Typography>
+    )
   );
 };

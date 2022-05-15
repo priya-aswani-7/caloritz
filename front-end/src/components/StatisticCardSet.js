@@ -1,15 +1,10 @@
-import { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { StatisticCard } from ".";
 import { getDateMonthYearString } from "../utils/helpers";
-import { foodEntryStatisticsData } from "../constants";
 
-export const StatisticCardSet = () => {
-  const [foodEntryStatistics, setFoodEntryStatistics] = useState(
-    foodEntryStatisticsData
-  );
-  const nowString = getDateMonthYearString(new Date().getTime());
+export const StatisticCardSet = ({ foodEntryStatistics }) => {
+  const nowString = getDateMonthYearString(new Date());
 
   return (
     <Box sx={{ mx: 5, textAlign: "center", mb: 4 }}>
@@ -18,7 +13,7 @@ export const StatisticCardSet = () => {
         sx={{ fontWeight: 100, fontSize: 18 }}
         color="primary"
       >
-        Food entry counts of the last week vs the last fortnight
+        Food entry counts of the last week vs the week before
       </Typography>
       <Typography variant="body1" sx={{ fontWeight: 100, mb: 2 }}>
         Today: {nowString}
@@ -29,7 +24,7 @@ export const StatisticCardSet = () => {
           justifyContent: "center",
         }}
       >
-        {foodEntryStatistics?.map((statistic, index) => (
+        {foodEntryStatistics?.foodEntryCounts?.map((statistic, index) => (
           <StatisticCard key={index.toString()} {...statistic} />
         ))}
       </Box>

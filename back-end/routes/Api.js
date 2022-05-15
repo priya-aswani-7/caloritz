@@ -66,8 +66,10 @@ router.get("/:resource/:id", (req, res) => {
 
 router.get("/user/:id/foodentry", (req, res) => {
   const id = req.params.id;
+  let startDate = req.query.startDate || 0;
+  let endDate = req.query.endDate || new Date().getTime();
 
-  FoodEntryController.getByUserId(id)
+  FoodEntryController.getByUserId(id, startDate, endDate)
     .then((data) => {
       res.json({
         confirmation: "success",

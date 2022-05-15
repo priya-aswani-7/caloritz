@@ -94,7 +94,7 @@ export const FoodEntry = ({
                   <TableRow>
                     <TableCell>Index</TableCell>
                     <TableCell>Product Name</TableCell>
-                    <TableCell>Cost</TableCell>
+                    <TableCell>Cost ($)</TableCell>
                     <TableCell>Calories</TableCell>
                     <TableCell>Consumed At</TableCell>
                     <TableCell />
@@ -119,10 +119,10 @@ export const FoodEntry = ({
                           {foodEntry.productName}
                         </TableCell>
                         <TableCell sx={{ color: "text.secondary" }}>
-                          {foodEntry.cost}
+                          {foodEntry.cost?.toFixed(2)}
                         </TableCell>
                         <TableCell sx={{ color: "text.secondary" }}>
-                          {foodEntry.calories}
+                          {foodEntry.calories?.toFixed(2)}
                         </TableCell>
                         <TableCell sx={{ color: "text.secondary" }}>
                           {consumedAtTimeString}

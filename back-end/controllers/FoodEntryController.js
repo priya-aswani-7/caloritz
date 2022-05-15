@@ -22,13 +22,15 @@ module.exports = {
     });
   },
 
-  getByUserId: (id) => {
+  getByUserId: (id, startDate, endDate) => {
     return new Promise((resolve, reject) => {
-      FoodEntry.find({ user: id })
+      FoodEntry.find({
+        user: id,
+        consumedAt: { $gte: startDate, $lte: endDate },
+      })
         .sort("consumedAt")
         .lean()
         .then((data) => {
-          console.log(data);
           let result = [];
 
           let currentTimestamp =
@@ -58,7 +60,6 @@ module.exports = {
           ) {
             result.push(currentMonthYear);
           }
-
           resolve(result);
         })
         .catch((error) =>

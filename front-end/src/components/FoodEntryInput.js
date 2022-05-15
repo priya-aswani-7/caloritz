@@ -15,8 +15,10 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { cloneDeep } from "lodash";
 import { getInsertPosition } from "../utils/helpers";
+import { createFoodEntry, editFoodEntry } from "../services/api";
 
 export const FoodEntryInput = ({
+  userId,
   data,
   setData,
   isAdmin,
@@ -25,6 +27,10 @@ export const FoodEntryInput = ({
   handleClickOpen,
   handleClose,
   editModeIndex,
+  filterStartDate,
+  filterEndDate,
+  setError,
+  setLoading,
 }) => {
   const [selectedUserIndex, setSelectedUserIndex] = useState(null);
   const [productName, setProductName] = useState(null);
@@ -37,7 +43,7 @@ export const FoodEntryInput = ({
     if (editModeIndex !== null) {
       let userIndex;
       for (let i = 0; i < users?.length; i++) {
-        if (users[i].id === data[editModeIndex]?.userId) {
+        if (users[i]._id === data[editModeIndex]?.userId) {
           userIndex = i;
           break;
         }
@@ -63,106 +69,173 @@ export const FoodEntryInput = ({
   };
 
   const handleSaveUserEntry = () => {
-    let currentData = data ? cloneDeep(data) : [];
-
-    const month = consumedAt.getMonth();
-    const year = consumedAt.getFullYear();
-    const monthYear = new Date(year, month).getTime();
-
-    let monthlyFoodEntryIndex = data ? -1 : 0;
-    let currentMonthlyFoodEntry = data.filter((monthlyFoodEntry, index) => {
-      if (monthlyFoodEntry.monthYear === monthYear) {
-        monthlyFoodEntryIndex = index;
-        return monthlyFoodEntry;
-      }
-    })[0];
-
-    if (monthlyFoodEntryIndex === -1) {
-      let insertPosition = getInsertPosition(data, "monthYear", monthYear);
-
-      currentData.splice(insertPosition, 0, {
-        monthYear,
-        foodEntries: [{ productName, cost, calories, consumedAt }],
-      });
-    } else {
-      let insertPosition = getInsertPosition(
-        currentMonthlyFoodEntry.foodEntries,
-        "consumedAt",
-        consumedAt.getTime()
-      );
-
-      currentMonthlyFoodEntry.foodEntries.splice(insertPosition, 0, {
-        productName,
-        cost,
-        calories,
-        consumedAt: consumedAt.getTime(),
-      });
-
-      currentMonthlyFoodEntry.foodEntries = [
-        ...currentMonthlyFoodEntry.foodEntries,
-      ];
-
-      currentData[monthlyFoodEntryIndex] = currentMonthlyFoodEntry;
-    }
-    setData(currentData);
-
-    handleClear();
-  };
-
-  const handleSaveAdminEntry = () => {
-    let insertPosition = getInsertPosition(
-      data,
-      "consumedAt",
-      consumedAt.getTime()
-    );
-
-    let currentData = data ? cloneDeep(data) : [];
-    currentData.splice(insertPosition, 0, {
-      userName: users[selectedUserIndex]?.name,
-      userId: users[selectedUserIndex]?.id,
+    handleClose();
+    setLoading(true);
+    createFoodEntry({
+      user: userId,
       productName,
       cost,
       calories,
       consumedAt: consumedAt.getTime(),
-    });
-    setData(currentData);
+    })
+      .then((result) => {
+        setError(null);
+        if (
+          (!filterStartDate && !filterEndDate) ||
+          (consumedAt >= filterStartDate && consumedAt <= filterEndDate)
+        ) {
+          let currentData = data ? cloneDeep(data) : [];
 
-    handleClear();
+          const month = consumedAt.getMonth();
+          const year = consumedAt.getFullYear();
+          const monthYear = new Date(year, month).getTime();
+
+          let monthlyFoodEntryIndex = data ? -1 : 0;
+          let currentMonthlyFoodEntry = data.filter(
+            (monthlyFoodEntry, index) => {
+              if (monthlyFoodEntry.monthYear === monthYear) {
+                monthlyFoodEntryIndex = index;
+                return monthlyFoodEntry;
+              }
+            }
+          )[0];
+
+          if (monthlyFoodEntryIndex === -1) {
+            let insertPosition = getInsertPosition(
+              data,
+              "monthYear",
+              monthYear
+            );
+
+            currentData.splice(insertPosition, 0, {
+              monthYear,
+              foodEntries: [
+                { _id: result._id, productName, cost, calories, consumedAt },
+              ],
+            });
+          } else {
+            let insertPosition = getInsertPosition(
+              currentMonthlyFoodEntry.foodEntries,
+              "consumedAt",
+              consumedAt.getTime()
+            );
+
+            currentMonthlyFoodEntry.foodEntries.splice(insertPosition, 0, {
+              _id: result._id,
+              productName,
+              cost,
+              calories,
+              consumedAt: consumedAt.getTime(),
+            });
+
+            currentMonthlyFoodEntry.foodEntries = [
+              ...currentMonthlyFoodEntry.foodEntries,
+            ];
+
+            currentData[monthlyFoodEntryIndex] = currentMonthlyFoodEntry;
+          }
+          setData(currentData);
+        }
+        handleClear();
+        setLoading(false);
+      })
+      .catch((error) => setError(error));
+  };
+
+  const handleSaveAdminEntry = () => {
+    handleClose();
+    setLoading(true);
+    createFoodEntry({
+      user: users[selectedUserIndex]?._id,
+      productName,
+      cost,
+      calories,
+      consumedAt: consumedAt.getTime(),
+    })
+      .then((result) => {
+        setError(null);
+        let insertPosition = getInsertPosition(
+          data,
+          "consumedAt",
+          consumedAt.getTime()
+        );
+
+        let currentData = data ? cloneDeep(data) : [];
+        currentData.splice(insertPosition, 0, {
+          _id: result._id,
+          userName: users[selectedUserIndex]?.name,
+          userId: users[selectedUserIndex]?._id,
+          productName,
+          cost,
+          calories,
+          consumedAt: consumedAt.getTime(),
+        });
+
+        setData(currentData);
+        handleClear();
+        setLoading(false);
+      })
+      .catch((error) => setError(error));
   };
 
   const handleEdit = () => {
-    let currentData = data ? cloneDeep(data) : [];
+    handleClose();
+    let editItem = data[editModeIndex];
 
-    if (consumedAt.getTime() === data[editModeIndex].consumedAt) {
-      currentData[editModeIndex] = {
-        userName: users[selectedUserIndex]?.name,
-        userId: users[selectedUserIndex]?.id,
-        productName,
-        cost,
-        calories,
-        consumedAt: consumedAt.getTime(),
-      };
-    } else {
-      let insertPosition = getInsertPosition(
-        data,
-        "consumedAt",
-        consumedAt.getTime()
-      );
-
-      currentData.splice(insertPosition, 0, {
-        userName: users[selectedUserIndex]?.name,
-        userId: users[selectedUserIndex]?.id,
-        productName,
-        cost,
-        calories,
-        consumedAt: consumedAt.getTime(),
-      });
-      currentData.splice(editModeIndex + 1, 1);
+    if (
+      editItem.userId === users[selectedUserIndex]?._id &&
+      editItem.productName === productName &&
+      editItem.cost === cost &&
+      editItem.calories === calories &&
+      editItem.consumedAt === consumedAt.getTime()
+    ) {
+      console.log("no updates thanks");
+      return;
     }
 
-    setData(currentData);
+    setLoading(true);
+    editFoodEntry(data[editModeIndex]?._id, {
+      user: users[selectedUserIndex]?._id,
+      productName,
+      cost,
+      calories,
+      consumedAt: consumedAt.getTime(),
+    })
+      .then(() => {
+        setError(null);
+        let currentData = data ? cloneDeep(data) : [];
+        if (consumedAt.getTime() === data[editModeIndex].consumedAt) {
+          currentData[editModeIndex] = {
+            userName: users[selectedUserIndex]?.name,
+            userId: users[selectedUserIndex]?._id,
+            productName,
+            cost,
+            calories,
+            consumedAt: consumedAt.getTime(),
+          };
+        } else {
+          let insertPosition = getInsertPosition(
+            data,
+            "consumedAt",
+            consumedAt.getTime()
+          );
 
-    handleClear();
+          currentData.splice(editModeIndex, 1);
+          currentData.splice(Math.max(insertPosition - 1, 0), 0, {
+            userName: users[selectedUserIndex]?.name,
+            userId: users[selectedUserIndex]?._id,
+            productName,
+            cost,
+            calories,
+            consumedAt: consumedAt.getTime(),
+          });
+        }
+
+        setData(currentData);
+        handleClear();
+        setLoading(false);
+      })
+      .catch((error) => setError(error));
   };
 
   return (
@@ -198,7 +271,7 @@ export const FoodEntryInput = ({
                     }
                     label="User"
                   >
-                    {users.map((user, index) => (
+                    {users?.map((user, index) => (
                       <MenuItem key={index.toString()} value={index}>
                         {user.name}
                       </MenuItem>

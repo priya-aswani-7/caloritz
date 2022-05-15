@@ -1,9 +1,12 @@
+export { AdminFoodEntries } from "./AdminFoodEntries";
+export { ErrorAlert } from "./ErrorAlert";
 export { Filter } from "./Filter";
 export { FoodEntry } from "./FoodEntry";
 export { FoodEntryInput } from "./FoodEntryInput";
 export { FoodEntryList } from "./FoodEntryList";
 export { GlobalFoodEntry } from "./GlobalFoodEntry";
 export { GlobalFoodEntryList } from "./GlobalFoodEntryList";
+export { LoadingSpinner } from "./LoadingSpinner";
 export { NavBar } from "./NavBar";
 export { StatisticCalorieEntry } from "./StatisticCalorieEntry";
 export { StatisticCalorieList } from "./StatisticCalorieList";

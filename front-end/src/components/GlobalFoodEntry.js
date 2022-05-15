@@ -57,8 +57,10 @@ export const GlobalFoodEntry = ({
       <TableCell sx={{ color: "text.secondary" }}>{index + 1}</TableCell>
       <TableCell sx={{ color: "text.secondary" }}>{userName}</TableCell>
       <TableCell sx={{ color: "text.secondary" }}>{productName}</TableCell>
-      <TableCell sx={{ color: "text.secondary" }}>{cost}</TableCell>
-      <TableCell sx={{ color: "text.secondary" }}>{calories}</TableCell>
+      <TableCell sx={{ color: "text.secondary" }}>{cost?.toFixed(2)}</TableCell>
+      <TableCell sx={{ color: "text.secondary" }}>
+        {calories?.toFixed(2)}
+      </TableCell>
       <TableCell sx={{ color: "text.secondary" }}>
         {consumedAtTimeString}
       </TableCell>

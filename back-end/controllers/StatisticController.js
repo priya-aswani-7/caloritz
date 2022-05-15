@@ -15,20 +15,20 @@ module.exports = {
 
     try {
       let fortnightCount = await FoodEntry.find({
-        createdAt: {
-          $gte: new Date(lastToLastWeek),
-          $lte: new Date(lastWeek - 24 * 3600 * 1000),
+        consumedAt: {
+          $gte: lastToLastWeek,
+          $lte: lastWeek - 24 * 3600 * 1000,
         },
       }).count();
 
       let lastWeekCount = await FoodEntry.find({
-        createdAt: { $gte: new Date(lastWeek), $lte: new Date(yesterday) },
+        consumedAt: { $gte: lastWeek, $lte: yesterday },
       }).count();
 
       let calorieData = await FoodEntry.aggregate([
         {
           $match: {
-            createdAt: { $gte: new Date(lastWeek), $lte: new Date(yesterday) },
+            consumedAt: { $gte: lastWeek, $lte: yesterday },
           },
         },
         {
@@ -62,7 +62,7 @@ module.exports = {
       let calorieStatisticsData = [];
       let index = 0;
 
-      users.map((user) => {
+      users?.map((user) => {
         let bool = calorieData[index]?._id?.name === user.name;
         console.log(calorieData[index]?._id?.name, user.name);
         calorieStatisticsData.push({
@@ -79,15 +79,15 @@ module.exports = {
         foodEntryCounts: [
           {
             foodEntryCount: fortnightCount,
-            timePhrase: "in the last fortnight",
-            startTime: lastToLastWeek,
+            timePhrase: "in the week before",
+            startDate: lastToLastWeek,
             endDate: lastWeek - 24 * 3600 * 1000,
           },
           {
             foodEntryCount: lastWeekCount,
             timePhrase: "in the last 7 days",
-            startTime: lastWeek,
-            endTime: yesterday,
+            startDate: lastWeek,
+            endDate: yesterday,
           },
         ],
       };
