@@ -3,6 +3,7 @@ const BASE_URL = "http://localhost:8080";
 export const getUsers = async () => {
   return fetch(`${BASE_URL}/user?type=user`, {
     mode: "cors",
+    cache: "no-cache",
     method: "get",
     headers: {
       Accept: "application/json",
@@ -18,6 +19,7 @@ export const getFoodEntries = async () => {
   return fetch(`${BASE_URL}/foodentry`, {
     mode: "cors",
     method: "get",
+    cache: "no-cache",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -38,6 +40,7 @@ export const getFoodEntriesByUserId = async (
     {
       mode: "cors",
       method: "get",
+      cache: "no-cache",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -53,6 +56,7 @@ export const createFoodEntry = async (foodEntry) => {
   return fetch(`${BASE_URL}/foodentry`, {
     mode: "cors",
     method: "post",
+    cache: "no-cache",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -68,6 +72,7 @@ export const editFoodEntry = async (foodEntryId, updatedFoodEntry) => {
   return fetch(`${BASE_URL}/foodentry/${foodEntryId}`, {
     mode: "cors",
     method: "put",
+    cache: "no-cache",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -83,6 +88,7 @@ export const deleteFoodEntry = async (foodEntryId) => {
   return fetch(`${BASE_URL}/foodentry/${foodEntryId}`, {
     mode: "cors",
     method: "delete",
+    cache: "no-cache",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -97,6 +103,7 @@ export const getStatistics = async () => {
   return fetch(`${BASE_URL}/statistic`, {
     mode: "cors",
     method: "get",
+    cache: "no-cache",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
