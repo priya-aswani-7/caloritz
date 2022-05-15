@@ -28,15 +28,22 @@ export const getFoodEntries = async () => {
     .catch((error) => error);
 };
 
-export const getFoodEntriesByUserId = async (userId) => {
-  return fetch(`${BASE_URL}/user/${userId}/foodentry`, {
-    mode: "cors",
-    method: "get",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  })
+export const getFoodEntriesByUserId = async (
+  userId,
+  filterStartDate,
+  filterEndDate
+) => {
+  return fetch(
+    `${BASE_URL}/user/${userId}/foodentry?startDate=${filterStartDate}&endDate=${filterEndDate}`,
+    {
+      mode: "cors",
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  )
     .then((response) => response.json())
     .then((data) => data.data)
     .catch((error) => error);
