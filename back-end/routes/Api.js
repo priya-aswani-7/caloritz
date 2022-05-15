@@ -89,10 +89,7 @@ router.post("/:resource", (req, res) => {
   const data = req.body;
   const controller = controllers[resource];
 
-  if (
-    !controller ||
-    [UserController, StatisticController].includes(controller)
-  ) {
+  if (!controller || [StatisticController].includes(controller)) {
     return res.json({
       confirmation: "Fail",
       message: "Invalid request.",
