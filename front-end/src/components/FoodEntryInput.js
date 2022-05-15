@@ -138,6 +138,7 @@ export const FoodEntryInput = ({
           setData(currentData);
         }
         handleClear();
+        setSuccess("Food entry added successfully");
         setLoading(false);
       })
       .catch((error) => setError(error));
