@@ -3,3 +3,4 @@ export { foodEntriesData } from "./foodEntriesData";
 export { globalFoodEntriesData } from "./globalFoodEntriesData";
 export { foodEntryStatisticsData } from "./foodEntryStatisticsData";
 export { usersData } from "./usersData";
+export { tokenData } from "./tokenData";
