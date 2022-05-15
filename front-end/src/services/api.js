@@ -1,4 +1,7 @@
+import { tokenData } from "../constants";
+
 const BASE_URL = "http://localhost:8080";
+const token = tokenData;
 
 export const getUsers = async () => {
   return fetch(`${BASE_URL}/user?type=user`, {
@@ -8,6 +11,7 @@ export const getUsers = async () => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "x-access-token": token,
     },
   })
     .then((response) => response.json())
@@ -23,6 +27,7 @@ export const getFoodEntries = async () => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "x-access-token": token,
     },
   })
     .then((response) => response.json())
@@ -44,6 +49,7 @@ export const getFoodEntriesByUserId = async (
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "x-access-token": token,
       },
     }
   )
@@ -60,6 +66,7 @@ export const createFoodEntry = async (foodEntry) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "x-access-token": token,
     },
     body: JSON.stringify(foodEntry),
   })
@@ -76,6 +83,7 @@ export const editFoodEntry = async (foodEntryId, updatedFoodEntry) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "x-access-token": token,
     },
     body: JSON.stringify(updatedFoodEntry),
   })
@@ -92,6 +100,7 @@ export const deleteFoodEntry = async (foodEntryId) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "x-access-token": token,
     },
   })
     .then((response) => response.json())
@@ -107,6 +116,7 @@ export const getStatistics = async () => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "x-access-token": token,
     },
   })
     .then((response) => response.json())
