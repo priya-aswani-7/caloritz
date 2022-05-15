@@ -9,15 +9,15 @@ module.exports = {
       date.getMonth(),
       date.getDate()
     ).getTime();
-    let yesterday = now - 24 * 3600 * 1000;
-    let lastWeek = yesterday - 24 * 6 * 3600 * 1000;
-    let lastToLastWeek = lastWeek - 24 * 6 * 3600 * 1000;
+    let yesterday = now - 1000;
+    let lastWeek = now - 7 * 24 * 3600 * 1000;
+    let lastToLastWeek = now - 14 * 24 * 3600 * 1000;
 
     try {
       let fortnightCount = await FoodEntry.find({
         consumedAt: {
           $gte: lastToLastWeek,
-          $lte: lastWeek - 24 * 3600 * 1000,
+          $lte: lastWeek - 1000,
         },
       }).count();
 
@@ -81,7 +81,7 @@ module.exports = {
             foodEntryCount: fortnightCount,
             timePhrase: "in the week before",
             startDate: lastToLastWeek,
-            endDate: lastWeek - 24 * 3600 * 1000,
+            endDate: lastWeek - 1000,
           },
           {
             foodEntryCount: lastWeekCount,
