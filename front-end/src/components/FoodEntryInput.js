@@ -189,7 +189,6 @@ export const FoodEntryInput = ({
       editItem.calories === calories &&
       editItem.consumedAt === consumedAt.getTime()
     ) {
-      console.log("no updates thanks");
       return;
     }
 
@@ -352,12 +351,15 @@ export const FoodEntryInput = ({
                       error={
                         (datePickerOpened &&
                           (consumedAt === null || consumedAt === "")) ||
+                        isNaN(consumedAt) ||
                         consumedAt > new Date()
                       }
                       helperText={
                         datePickerOpened &&
                         (consumedAt === null || consumedAt === "")
                           ? "Product consumption timestamp is required"
+                          : isNaN(consumedAt)
+                          ? "Product consumption must be a timestamp"
                           : consumedAt > new Date()
                           ? "Product consumption timestamp cannot be in the future"
                           : null
@@ -367,7 +369,7 @@ export const FoodEntryInput = ({
                   label="Consumed At"
                   value={consumedAt}
                   onChange={(value) => setConsumedAt(value)}
-                  onClose={() => !consumedAt && setDatePickerOpened(true)}
+                  onClose={() => setDatePickerOpened(true)}
                   maxDateTime={new Date()}
                 />
               </LocalizationProvider>
@@ -400,6 +402,7 @@ export const FoodEntryInput = ({
               calories <= 0 ||
               (datePickerOpened &&
                 (consumedAt === null || consumedAt === "")) ||
+              isNaN(consumedAt) ||
               consumedAt > new Date()
             }
           >
