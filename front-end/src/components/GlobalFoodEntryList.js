@@ -16,6 +16,7 @@ export const GlobalFoodEntryList = ({
   handleEdit,
   setError,
   setLoading,
+  setSuccess,
 }) => {
   const handleDelete = (deleteIndex) => {
     setLoading(true);
@@ -26,6 +27,7 @@ export const GlobalFoodEntryList = ({
         currentData.splice(deleteIndex, 1);
         setData(currentData);
         setLoading(false);
+        setSuccess("Food entry deleted successfully");
       })
       .catch((error) => setError(error));
   };
